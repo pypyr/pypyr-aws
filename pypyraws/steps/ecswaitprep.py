@@ -132,7 +132,8 @@ def run_step(context):
         logger.debug("Adding service arns")
         waiter_dict['services'] = arn_list
 
-    context['awsWaitIn'] = {}
+    if 'awsWaitIn' not in context:
+        context['awsWaitIn'] = {}
     context['awsWaitIn']['waitArgs'] = waiter_dict
     logger.info("added context['awsWaitIn']['waitArgs']")
     logger.debug("done")

@@ -41,13 +41,13 @@ def run_step(context):
     logger.debug("started")
     client_in, service_name, waiter_name = get_waiter_args(context)
 
+    logger.info(f"Waiting for {waiter_name} on aws {service_name}.")
+
     pypyraws.aws.service.waiter(
         service_name=service_name,
         waiter_name=waiter_name,
         waiter_args=client_in.get('waiterArgs', None),
         wait_args=client_in.get('waitArgs', None))
-
-    logger.info(f"Executed {waiter_name} on aws {service_name}.")
 
     logger.debug("done")
 

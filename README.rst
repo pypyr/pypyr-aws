@@ -44,9 +44,10 @@ Tested against Python 3.6
 *****
 steps
 *****
-pypyrslack.steps.send
+pypyrslack.steps.client
 =====================
-Send a message to slack.
+Run any method on any of the following aws services:
+acm, apigateway, application-autoscaling, appstream, autoscaling, batch, budgets, clouddirectory, cloudformation, cloudfront, cloudhsm, cloudsearch, cloudsearchdomain, cloudtrail, cloudwatch, codebuild, codecommit, codedeploy, codepipeline, codestar, cognito-identity, cognito-idp, cognito-sync, config, cur, datapipeline, devicefarm, directconnect, discovery, dms, ds, dynamodb, dynamodbstreams, ec2, ecr, ecs, efs, elasticache, elasticbeanstalk, elastictranscoder, elb, elbv2, emr, es, events, firehose, gamelift, glacier, health, iam, importexport, inspector, iot, iot-data, kinesis, kinesisanalytics, kms, lambda, lex-models, lex-runtime, lightsail, logs, machinelearning, marketplace-entitlement, marketplacecommerceanalytics, meteringmarketplace, mturk, opsworks, opsworkscm, organizations, pinpoint, polly, rds, redshift, rekognition, resourcegroupstaggingapi, route53, route53domains, s3, sdb, servicecatalog, ses, shield, sms, snowball, sns, sqs, ssm, stepfunctions, storagegateway, sts, support, swf, waf, waf-regional, workdocs, workspaces, xray
 
 Required Context
 ----------------
@@ -125,32 +126,56 @@ If you saved this yaml as ``./pipelines/hoping-for-a-hotdog.yaml``, you can run
 See a worked example for `pypyr slack here
 <https://github.com/pypyr/pypyr-example/tree/master/pipelines/slack.yaml>`__.
 
-********************
-slack authentication
-********************
-Get slack api token
-===================
-To authenticate against your slack, you need to create an api key. There're
-various ways of going about this, using legacy tokens, test tokens or a bot.
+******************
+aws authentication
+******************
+Configuring credentials
+=======================
+pypyr-aws pretty much just uses the underlying boto3 authentication mechanisms.
+More info here: http://boto3.readthedocs.io/en/latest/guide/configuration.html
 
-I generally `create a bot <https://my.slack.com/services/new/bot>`__. Given
-you're likely to use it just to send notifications to slack, rather than
-consume events from slack, it's a pretty simple setup just to get your api key.
+This means any of the following will work:
 
-Remember to invite and add the bot you create to the slack channel(s) to which
-you want to post. You invite the bot in like you would a normal user.
+- In the pypyr context
 
+  .. code-block:: python
+
+    context['awsClientIn']['clientArgs'] = {
+        aws_access_key_id=ACCESS_KEY,
+        aws_secret_access_key=SECRET_KEY,
+        aws_session_token=SESSION_TOKEN,
+      }
+
+- $ENV variables
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
+  - AWS_SESSION_TOKEN
+
+- Credentials file at *~/.aws/credentials* or *~/.aws/config*
+  - If you have the aws-cli installed, run ``aws configure`` to get these
+    configured for you automatically.
+
+Tip: On dev boxes I generally don't bother with credentials, because chances
+are pretty good that I have the aws-cli installed already anyway, so pypyr
+will just re-use the aws shared configuration files that are there anyway.
 
 Ensure secrets stay secret
 ==========================
-Be safe! Don't hard-code your api token, don't check it into a public repo.
-Here are some tips for handling api tokens from `slack <http://slackapi.github.io/python-slackclient/auth.html#handling-tokens>`__.
+Be safe! Don't hard-code your aws credentials. Don't check credentials into a
+public repo.
 
-Do remember not to fling the api key around as a shell argument - it could
+Tip: if you're running pypyr inside of aws - e.g in an ec2 instance or an ecs
+container that is running under an IAM role, you don't actually *need*
+explicitly to configure credentials for pypyr-aws.
+
+Do remember not to fling your key & secret around as shell arguments - it could
 very easily leak that way into logs or expose via a ``ps``. I generally use one
 of the pypyr built-in context parsers like *pypyr.parser.jsonfile* or
 *pypyr.parser.yamlfile*, see
 `here for details <https://github.com/pypyr/pypyr-cli#built-in-context-parsers>`__.
+
+Do remember also that $ENV variables are not a particularly secure place to
+keep your secrets.
 
 *******
 Testing

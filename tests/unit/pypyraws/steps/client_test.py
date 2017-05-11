@@ -142,8 +142,160 @@ def test_aws_client_pass_all_args(mock_service):
                                          operation_args={'mk1': 'mv1',
                                                          'mk2': 'mv2'},
                                          )
+
 # ---------------------------- run_step -------------------------------------#
 
+# ---------------------------- substitutions --------------------------------#
+
+
+@patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
+                                                            'rk2': 'rv2'})
+def test_aws_client_substitute_all_args(mock_service):
+    """Successful substitution run with client and method args"""
+    context = Context({
+        'k1': 'v1',
+        'k2': 'v2',
+        'k3': 'v3',
+        'k4': 'v4',
+        'k5': 'v5',
+        'k6': 'v6',
+        'k7': 'v7',
+        'awsClientIn': {
+            'serviceName': 'service name {k1}',
+            'methodName': 'method_name {k2}',
+            'arbKey': 'arb_value {k3}',
+            'clientArgs': {'ck1{k4}': 'cv1{k5}', 'ck2': 'cv2'},
+            'methodArgs': {'mk1': 'mv1', 'mk2{k6}': 'mv2{k7}'}
+        }})
+    client_step.run_step(context)
+
+    assert len(context) == 9
+    assert context['k1'] == 'v1'
+    assert context['awsClientIn'] == {
+        'serviceName': 'service name {k1}',
+        'methodName': 'method_name {k2}',
+        'arbKey': 'arb_value {k3}',
+        'clientArgs': {'ck1{k4}': 'cv1{k5}', 'ck2': 'cv2'},
+        'methodArgs': {'mk1': 'mv1', 'mk2{k6}': 'mv2{k7}'}
+    }
+    assert context['awsClientOut'] == {'rk1': 'rv1', 'rk2': 'rv2'}
+    mock_service.assert_called_once_with(service_name='service name v1',
+                                         method_name='method_name v2',
+                                         client_args={'ck1v4': 'cv1v5',
+                                                      'ck2': 'cv2'},
+                                         operation_args={'mk1': 'mv1',
+                                                         'mk2v6': 'mv2v7'},
+                                         )
+
+
+@patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
+                                                            'rk2': 'rv2'})
+def test_aws_client_substitute_no_client_method_args(mock_service):
+    """Successful substitution run with no client and no method args"""
+    context = Context({
+        'k1': 'v1',
+        'k2': 'v2',
+        'k3': 'v3',
+        'k4': 'v4',
+        'k5': 'v5',
+        'k6': 'v6',
+        'k7': 'v7',
+        'awsClientIn': {
+            'serviceName': 'service name {k1}',
+            'methodName': 'method_name {k2}',
+            'arbKey': 'arb_value {k3}'
+        }})
+    client_step.run_step(context)
+
+    assert len(context) == 9
+    assert context['k1'] == 'v1'
+    assert context['awsClientIn'] == {
+        'serviceName': 'service name {k1}',
+        'methodName': 'method_name {k2}',
+        'arbKey': 'arb_value {k3}'
+    }
+    assert context['awsClientOut'] == {'rk1': 'rv1', 'rk2': 'rv2'}
+    mock_service.assert_called_once_with(service_name='service name v1',
+                                         method_name='method_name v2',
+                                         client_args=None,
+                                         operation_args=None
+                                         )
+
+
+@patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
+                                                            'rk2': 'rv2'})
+def test_aws_client_substitute_no_client_args(mock_service):
+    """Successful run with no client but method args"""
+    context = Context({
+        'k1': 'v1',
+        'k2': 'v2',
+        'k3': 'v3',
+        'k4': 'v4',
+        'k5': 'v5',
+        'k6': 'v6',
+        'k7': 'v7',
+        'awsClientIn': {
+            'serviceName': 'service name {k1}',
+            'methodName': 'method_name {k2}',
+            'arbKey': 'arb_value {k3}',
+            'methodArgs': {'mk1': 'mv1', 'mk2{k6}': 'mv2{k7}'}
+        }})
+    client_step.run_step(context)
+
+    assert len(context) == 9
+    assert context['k1'] == 'v1'
+    assert context['awsClientIn'] == {
+        'serviceName': 'service name {k1}',
+        'methodName': 'method_name {k2}',
+        'arbKey': 'arb_value {k3}',
+        'methodArgs': {'mk1': 'mv1', 'mk2{k6}': 'mv2{k7}'}
+    }
+    assert context['awsClientOut'] == {'rk1': 'rv1', 'rk2': 'rv2'}
+    mock_service.assert_called_once_with(service_name='service name v1',
+                                         method_name='method_name v2',
+                                         client_args=None,
+                                         operation_args={'mk1': 'mv1',
+                                                         'mk2v6': 'mv2v7'},
+                                         )
+
+
+@patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
+                                                            'rk2': 'rv2'})
+def test_aws_client_substitute_no_method_args(mock_service):
+    """Successful run with client but no method args"""
+    context = Context({
+        'k1': 'v1',
+        'k2': 'v2',
+        'k3': 'v3',
+        'k4': 'v4',
+        'k5': 'v5',
+        'k6': 'v6',
+        'k7': 'v7',
+        'awsClientIn': {
+            'serviceName': 'service name {k1}',
+            'methodName': 'method_name {k2}',
+            'arbKey': 'arb_value {k3}',
+            'clientArgs': {'ck1{k4}': 'cv1{k5}', 'ck2': 'cv2'}
+        }})
+    client_step.run_step(context)
+
+    assert len(context) == 9
+    assert context['k1'] == 'v1'
+    assert context['awsClientIn'] == {
+        'serviceName': 'service name {k1}',
+        'methodName': 'method_name {k2}',
+        'arbKey': 'arb_value {k3}',
+        'clientArgs': {'ck1{k4}': 'cv1{k5}', 'ck2': 'cv2'}
+    }
+    assert context['awsClientOut'] == {'rk1': 'rv1', 'rk2': 'rv2'}
+    mock_service.assert_called_once_with(service_name='service name v1',
+                                         method_name='method_name v2',
+                                         client_args={'ck1v4': 'cv1v5',
+                                                      'ck2': 'cv2'},
+                                         operation_args=None
+                                         )
+# ---------------------------- substitutions --------------------------------#
+#
 # ---------------------------- get_service_args------------------------------#
 
 

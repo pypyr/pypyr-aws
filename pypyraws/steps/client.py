@@ -11,6 +11,9 @@ logger = logging.getLogger(__name__)
 def run_step(context):
     """Execute any low-level boto3 client method.
 
+    All of the awsClientIn descendant valuies support {key}
+    string interpolation.
+
     Args:
         context:
             Dictionary. Mandatory.
@@ -40,14 +43,22 @@ def run_step(context):
     logger.debug("started")
     client_in, service_name, method_name = get_service_args(context)
 
-    context['awsClientOut'] = pypyraws.aws.service.operation_exec(
-        service_name=service_name,
-        method_name=method_name,
-        client_args=client_in.get('clientArgs', None),
-        operation_args=client_in.get('methodArgs', None))
+    client_args = client_in.get('clientArgs', None)
+    if client_args is not None:
+        client_args = context.get_formatted_iterable(client_args)
 
-    logger.info(f"Executed {method_name} on aws {service_name}. Response in "
-                "context['awsClientOut']")
+    method_args = client_in.get('methodArgs', None)
+    if method_args is not None:
+        method_args = context.get_formatted_iterable(method_args)
+
+    context['awsClientOut'] = pypyraws.aws.service.operation_exec(
+        service_name=context.get_formatted_string(service_name),
+        method_name=context.get_formatted_string(method_name),
+        client_args=client_args,
+        operation_args=method_args)
+
+    logger.debug("aws response in context['awsClientOut']")
+    logger.info(f"Executed {method_name} on aws {service_name}.")
 
     logger.debug("done")
 

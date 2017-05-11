@@ -156,6 +156,47 @@ def test_waitprep_taskarns_with_cluster():
                                     'cluster': 'arb cluster',
                                     'tasks': ['one', 'two', 'three']}}
 
+
+def test_waitprep_dont_overwrite_existing_waitin():
+    """Doesn't overwrite existing waitin, just overwrites waitArgs."""
+    context = Context({
+        'awsClientOut': {'taskArns': ['one', 'two', 'three'],
+                         'NextToken': 'string'},
+        'awsEcsWaitPrepCluster': 'arb cluster',
+        'awsWaitIn': {
+            'key1': 'value1'
+        }
+    })
+
+    prepstep.run_step(context)
+
+    assert context['awsWaitIn'] == {
+        'key1': 'value1',
+        'waitArgs': {
+            'cluster': 'arb cluster',
+            'tasks': ['one', 'two', 'three']}}
+
+
+def test_waitprep_overwrite_existing_waitargs():
+    """Doesn't overwrite existing waitin, just overwrites waitArgs."""
+    context = Context({
+        'awsClientOut': {'taskArns': ['one', 'two', 'three'],
+                         'NextToken': 'string'},
+        'awsEcsWaitPrepCluster': 'arb cluster',
+        'awsWaitIn': {
+            'key1': 'value1',
+            'waitArgs': {'k1': 'v1'}
+        }
+    })
+
+    prepstep.run_step(context)
+
+    assert context['awsWaitIn'] == {
+        'key1': 'value1',
+        'waitArgs': {
+            'cluster': 'arb cluster',
+            'tasks': ['one', 'two', 'three']}}
+
 # ------------------------------ tasks ---------------------------------------#
 
 # ------------------------------ services-------------------------------------#
