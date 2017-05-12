@@ -44,7 +44,7 @@ pip
 ===
 .. code-block:: bash
 
-  # pip install --upgrade pypyr-aws
+  # pip install --upgrade pypyraws
 
 pypyr-slack depends on the ``pypyr`` cli. The above ``pip`` will install it for
 you if you don't have it already.
@@ -529,7 +529,7 @@ https://www.345.systems/contact.
                 :alt: coverage status
                 :target: https://app.shippable.com/github/pypyr/pypyr-aws
 
-.. |pypi| image:: https://badge.fury.io/py/pypyr-aws.svg
+.. |pypi| image:: https://badge.fury.io/py/pypyraws.svg
                 :alt: pypi version
-                :target: https://pypi.python.org/pypi/pypyr-aws/
+                :target: https://pypi.python.org/pypi/pypyraws/
                 :align: bottom

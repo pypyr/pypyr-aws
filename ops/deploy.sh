@@ -90,7 +90,7 @@ remove_virtualenv .deployenv
 echo "Deploy to pypi complete. Testing in new virtual env."
 
 create_virtualenv .pypitest
-pip install pypyr-aws
+pip install pypyraws
 TEST_DEPLOY_VERSION=python -c 'import pypyraws.version; print(pypyraws.version.__version__)'
 if [ "${TEST_DEPLOY_VERSION}" =  "${NEW_VERSION}" ]; then
   echo "Deployed version is ${TEST_DEPLOY_VERSION}. Smoke test passed OK."
