@@ -4,7 +4,6 @@ import pypyraws.aws.s3 as ps3
 from pypyr.context import Context
 from pypyr.errors import KeyNotInContextError
 import pytest
-from unittest.mock import Mock
 
 
 # ---------------------------- get_payload ----------------------------------#
@@ -33,9 +32,7 @@ def test_get_payload_no_methodargs():
 @patch('pypyraws.aws.service.operation_exec')
 def test_aws_client_pass(mock_s3):
     """Successful run with client args"""
-    mock_body = Mock()
-    mock_body.read.return_value = b'bunchofbytes'
-    mock_s3.side_effect = [{'Body': mock_body}]
+    mock_s3.side_effect = [{'Body': b'bunchofbytes'}]
 
     context = Context({
         'k1': 'v1',
@@ -79,9 +76,7 @@ def test_aws_client_pass(mock_s3):
 @patch('pypyraws.aws.service.operation_exec')
 def test_aws_client_pass_no_client_args(mock_s3):
     """Successful run with no client args"""
-    mock_body = Mock()
-    mock_body.read.return_value = b'bunchofbytes'
-    mock_s3.side_effect = [{'Body': mock_body}]
+    mock_s3.side_effect = [{'Body': b'bunchofbytes'}]
 
     context = Context({
         'k1': 'v1',
@@ -114,6 +109,53 @@ def test_aws_client_pass_no_client_args(mock_s3):
                                     operation_args={
                                         'Bucket': 'bucket name',
                                         'Key': 'key name',
+                                        'SSECustomerAlgorithm': 'sse alg',
+                                        'SSECustomerKey': 'sse key'}
+                                    )
+
+
+@patch('pypyraws.aws.service.operation_exec')
+def test_aws_client_pass_substitutions(mock_s3):
+    """Successful run with client args"""
+    mock_s3.side_effect = [{'Body': b'bunchofbytes'}]
+
+    context = Context({
+        'k1': 'v1',
+        'k2': 'v2',
+        'k3': 'v3',
+        'k4': 'v4',
+        's3Fetch': {
+            'serviceName': 'service name',
+            'methodName': 'method_name',
+            'clientArgs': {'ck1 {k1}': 'cv1', 'ck2': 'cv2 {k2}'},
+            'methodArgs': {'Bucket': '{k3} bucket name',
+                           'Key': 'key name {k4}',
+                           'SSECustomerAlgorithm': 'sse alg',
+                           'SSECustomerKey': 'sse key'}
+        }})
+    payload = ps3.get_payload(context)
+
+    assert payload
+    assert payload == b'bunchofbytes'
+    assert len(context) == 5
+    assert context['k1'] == 'v1'
+    assert context['s3Fetch'] == {
+        'serviceName': 'service name',
+        'methodName': 'method_name',
+        'clientArgs': {'ck1 {k1}': 'cv1', 'ck2': 'cv2 {k2}'},
+        'methodArgs': {'Bucket': '{k3} bucket name',
+                       'Key': 'key name {k4}',
+                       'SSECustomerAlgorithm': 'sse alg',
+                       'SSECustomerKey': 'sse key'}
+    }
+
+    mock_s3.assert_called_once_with(service_name='s3',
+                                    method_name='get_object',
+                                    client_args={'ck1 v1': 'cv1',
+                                                 'ck2': 'cv2 v2'},
+                                    operation_args={
+                                        'Bucket': 'v3 bucket name',
+                                        'Key': 'key name v4',
                                         'SSECustomerAlgorithm': 'sse alg',
                                         'SSECustomerKey': 'sse key'}
                                     )
