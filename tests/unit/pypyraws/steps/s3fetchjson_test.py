@@ -2,7 +2,6 @@
 import json
 import pypyraws.steps.s3fetchjson as s3fetchjson
 from pypyr.context import Context
-import ruamel.yaml as yaml
 from unittest.mock import Mock, patch
 
 
@@ -10,7 +9,7 @@ from unittest.mock import Mock, patch
 def test_s3fetchjson(mock_s3):
     """Success path all the way through to the mocked boto s3 object."""
     mock_body = Mock()
-    bunch_of_bytes = bytes(yaml.dumps(
+    bunch_of_bytes = bytes(json.dumps(
         {'newkey': 'newvalue', 'newkey2': 'newvalue2'}), 'utf-8')
 
     mock_body.read.return_value = bunch_of_bytes

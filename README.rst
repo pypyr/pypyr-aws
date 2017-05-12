@@ -45,9 +45,9 @@ Tested against Python 3.6
 steps
 *****
 pypyrslack.steps.client
-=====================
+=======================
 Run any method on any of the following aws services:
-acm, apigateway, application-autoscaling, appstream, autoscaling, batch, budgets, clouddirectory, cloudformation, cloudfront, cloudhsm, cloudsearch, cloudsearchdomain, cloudtrail, cloudwatch, codebuild, codecommit, codedeploy, codepipeline, codestar, cognito-identity, cognito-idp, cognito-sync, config, cur, datapipeline, devicefarm, directconnect, discovery, dms, ds, dynamodb, dynamodbstreams, ec2, ecr, ecs, efs, elasticache, elasticbeanstalk, elastictranscoder, elb, elbv2, emr, es, events, firehose, gamelift, glacier, health, iam, importexport, inspector, iot, iot-data, kinesis, kinesisanalytics, kms, lambda, lex-models, lex-runtime, lightsail, logs, machinelearning, marketplace-entitlement, marketplacecommerceanalytics, meteringmarketplace, mturk, opsworks, opsworkscm, organizations, pinpoint, polly, rds, redshift, rekognition, resourcegroupstaggingapi, route53, route53domains, s3, sdb, servicecatalog, ses, shield, sms, snowball, sns, sqs, ssm, stepfunctions, storagegateway, sts, support, swf, waf, waf-regional, workdocs, workspaces, xray
+  acm, apigateway, application-autoscaling, appstream, autoscaling, batch, budgets, clouddirectory, cloudformation, cloudfront, cloudhsm, cloudsearch, cloudsearchdomain, cloudtrail, cloudwatch, codebuild, codecommit, codedeploy, codepipeline, codestar, cognito-identity, cognito-idp, cognito-sync, config, cur, datapipeline, devicefarm, directconnect, discovery, dms, ds, dynamodb, dynamodbstreams, ec2, ecr, ecs, efs, elasticache, elasticbeanstalk, elastictranscoder, elb, elbv2, emr, es, events, firehose, gamelift, glacier, health, iam, importexport, inspector, iot, iot-data, kinesis, kinesisanalytics, kms, lambda, lex-models, lex-runtime, lightsail, logs, machinelearning, marketplace-entitlement, marketplacecommerceanalytics, meteringmarketplace, mturk, opsworks, opsworkscm, organizations, pinpoint, polly, rds, redshift, rekognition, resourcegroupstaggingapi, route53, route53domains, s3, sdb, servicecatalog, ses, shield, sms, snowball, sns, sqs, ssm, stepfunctions, storagegateway, sts, support, swf, waf, waf-regional, workdocs, workspaces, xray
 
 Required Context
 ----------------
@@ -152,6 +152,7 @@ This means any of the following will work:
   - AWS_SESSION_TOKEN
 
 - Credentials file at *~/.aws/credentials* or *~/.aws/config*
+
   - If you have the aws-cli installed, run ``aws configure`` to get these
     configured for you automatically.
 
