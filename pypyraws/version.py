@@ -2,7 +2,7 @@
 
 import platform
 
-__version__ = '0.0.0'
+__version__ = '0.0.1'
 
 
 def get_version():
