@@ -13,8 +13,9 @@ def run_step(context):
     Args:
         - context: pypyr.context.Context. Mandatory. Should contain keys for:
             - s3Fetch: dict. mandatory. Must contain:
-                - Bucket: string. s3 bucket name.
-                - Key: string. s3 key name.
+                -methodArgs
+                    - Bucket: string. s3 bucket name.
+                    - Key: string. s3 key name.
 
     json parsed from the s3 file will be merged into the
     context. This will overwrite existing values if the same keys are already

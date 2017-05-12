@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 def run_step(context):
     """Execute any low-level boto3 client method.
 
-    All of the awsClientIn descendant valuies support {key}
+    All of the awsClientIn descendant values support {key}
     string interpolation.
 
     Args:

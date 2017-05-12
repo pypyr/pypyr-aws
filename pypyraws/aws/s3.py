@@ -13,8 +13,9 @@ def get_payload(context):
     Args:
         context: pypyr.context.Context. Mandatory. Must contain key:
             - s3Fetch: dict. mandatory. Must contain:
-                - Bucket: string. s3 bucket name.
-                - Key: string. s3 key name.
+                - methodArgs
+                    - Bucket: string. s3 bucket name.
+                    - Key: string. s3 key name.
 
     Returns:
         bytes: payload of the s3 obj in bytes

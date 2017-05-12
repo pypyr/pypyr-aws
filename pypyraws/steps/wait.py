@@ -11,6 +11,9 @@ logger = logging.getLogger(__name__)
 def run_step(context):
     """Run any low-level boto3 client wait from get_waiter.
 
+    All of the awsWaitIn descendant values support {key}
+    string interpolation.
+
     Args:
         context:
             Dictionary. Mandatory.
@@ -41,13 +44,24 @@ def run_step(context):
     logger.debug("started")
     client_in, service_name, waiter_name = get_waiter_args(context)
 
+    waiter_args = client_in.get('waiterArgs', None)
+    if waiter_args is not None:
+        waiter_args = context.get_formatted_iterable(waiter_args)
+
+    wait_args = client_in.get('waitArgs', None)
+    if wait_args is not None:
+        wait_args = context.get_formatted_iterable(wait_args)
+
+    waiter_name = context.get_formatted_string(waiter_name)
+    service_name = context.get_formatted_string(service_name)
+
     logger.info(f"Waiting for {waiter_name} on aws {service_name}.")
 
     pypyraws.aws.service.waiter(
         service_name=service_name,
         waiter_name=waiter_name,
-        waiter_args=client_in.get('waiterArgs', None),
-        wait_args=client_in.get('waitArgs', None))
+        waiter_args=waiter_args,
+        wait_args=wait_args)
 
     logger.debug("done")
 

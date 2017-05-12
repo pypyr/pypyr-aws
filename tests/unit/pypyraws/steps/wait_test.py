@@ -138,6 +138,143 @@ def test_aws_client_pass_all_args(mock_waiter):
                                         wait_args={'mk1': 'mv1',
                                                     'mk2': 'mv2'},
                                         )
+
+
+@patch('pypyraws.aws.service.waiter')
+def test_aws_client_pass_all_args_substitutions(mock_waiter):
+    """Successful run with waiter and wait args substitutions"""
+    context = Context({
+        'k1': 'v1',
+        'k2': 'v2',
+        'k3': 'v3',
+        'k4': 'v4',
+        'k5': 'v5',
+        'awsWaitIn': {
+            'serviceName': 'service name {k1}',
+            'waiterName': '{k2} waiter_name',
+            'arbKey': 'arb_value',
+            'waiterArgs': {'ck1 {k3}': 'cv1', 'ck2': '{k4} cv2'},
+            'waitArgs': {'mk1': 'mv1', '{k5} mk2': 'mv2'}
+        }})
+    wait.run_step(context)
+
+    assert len(context) == 6
+    assert context['k1'] == 'v1'
+    assert context['awsWaitIn'] == {
+        'serviceName': 'service name {k1}',
+        'waiterName': '{k2} waiter_name',
+        'arbKey': 'arb_value',
+        'waiterArgs': {'ck1 {k3}': 'cv1', 'ck2': '{k4} cv2'},
+        'waitArgs': {'mk1': 'mv1', '{k5} mk2': 'mv2'}
+    }
+
+    mock_waiter.assert_called_once_with(service_name='service name v1',
+                                        waiter_name='v2 waiter_name',
+                                        waiter_args={'ck1 v3': 'cv1',
+                                                     'ck2': 'v4 cv2'},
+                                        wait_args={'mk1': 'mv1',
+                                                    'v5 mk2': 'mv2'},
+                                        )
+
+
+@patch('pypyraws.aws.service.waiter')
+def test_aws_client_pass_no_waiterargs_substitutions(mock_waiter):
+    """Successful run with no waiter, but with wait args substitutions"""
+    context = Context({
+        'k1': 'v1',
+        'k2': 'v2',
+        'k3': 'v3',
+        'k4': 'v4',
+        'k5': 'v5',
+        'awsWaitIn': {
+            'serviceName': 'service name {k1}',
+            'waiterName': '{k2} waiter_name',
+            'arbKey': 'arb_value',
+            'waitArgs': {'mk1': 'mv1', '{k5} mk2': 'mv2'}
+        }})
+    wait.run_step(context)
+
+    assert len(context) == 6
+    assert context['k1'] == 'v1'
+    assert context['awsWaitIn'] == {
+        'serviceName': 'service name {k1}',
+        'waiterName': '{k2} waiter_name',
+        'arbKey': 'arb_value',
+        'waitArgs': {'mk1': 'mv1', '{k5} mk2': 'mv2'}
+    }
+
+    mock_waiter.assert_called_once_with(service_name='service name v1',
+                                        waiter_name='v2 waiter_name',
+                                        waiter_args=None,
+                                        wait_args={'mk1': 'mv1',
+                                                    'v5 mk2': 'mv2'},
+                                        )
+
+
+@patch('pypyraws.aws.service.waiter')
+def test_aws_client_pass_no_waitargs_substitutions(mock_waiter):
+    """Successful run with waiter but no wait args substitutions"""
+    context = Context({
+        'k1': 'v1',
+        'k2': 'v2',
+        'k3': 'v3',
+        'k4': 'v4',
+        'k5': 'v5',
+        'awsWaitIn': {
+            'serviceName': 'service name {k1}',
+            'waiterName': '{k2} waiter_name',
+            'arbKey': 'arb_value',
+            'waiterArgs': {'ck1 {k3}': 'cv1', 'ck2': '{k4} cv2'}
+        }})
+    wait.run_step(context)
+
+    assert len(context) == 6
+    assert context['k1'] == 'v1'
+    assert context['awsWaitIn'] == {
+        'serviceName': 'service name {k1}',
+        'waiterName': '{k2} waiter_name',
+        'arbKey': 'arb_value',
+        'waiterArgs': {'ck1 {k3}': 'cv1', 'ck2': '{k4} cv2'}
+    }
+
+    mock_waiter.assert_called_once_with(service_name='service name v1',
+                                        waiter_name='v2 waiter_name',
+                                        waiter_args={'ck1 v3': 'cv1',
+                                                     'ck2': 'v4 cv2'},
+                                        wait_args=None
+                                        )
+
+
+@patch('pypyraws.aws.service.waiter')
+def test_aws_client_pass_no_opt_args_substitutions(mock_waiter):
+    """Successful run with no optional args substitutions"""
+    context = Context({
+        'k1': 'v1',
+        'k2': 'v2',
+        'k3': 'v3',
+        'k4': 'v4',
+        'k5': 'v5',
+        'awsWaitIn': {
+            'serviceName': 'service name {k1}',
+            'waiterName': '{k2} waiter_name',
+            'arbKey': 'arb_value'
+        }})
+    wait.run_step(context)
+
+    assert len(context) == 6
+    assert context['k1'] == 'v1'
+    assert context['awsWaitIn'] == {
+        'serviceName': 'service name {k1}',
+        'waiterName': '{k2} waiter_name',
+        'arbKey': 'arb_value'
+    }
+
+    mock_waiter.assert_called_once_with(service_name='service name v1',
+                                        waiter_name='v2 waiter_name',
+                                        waiter_args=None,
+                                        wait_args=None
+                                        )
+
 # ---------------------------- run_step -------------------------------------#
 
 # ---------------------------- get_waiter_args------------------------------#
