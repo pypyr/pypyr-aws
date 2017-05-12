@@ -7,13 +7,25 @@ pypyr aws plug-in
     :align: left
 
 *pypyr*
-    pronounce how you like, but I generally say *piper* as in "piping down the
-    valleys wild"
+  pronounce how you like, but I generally say *piper* as in "piping down the
+  valleys wild"
 
-Run anything on the aws. The easiest way to invoke the aws api.
-Send messages to `slack <https://slack.com/>`__ from pypyr. This is useful for
-sending notifications on success or failure conditions in your pipelines. Or
-for sending a message just because you can.
+*the pypyr aws plug-in*
+  Run anything on aws. No really, anything. If the aws api supports it, the
+  pypyr aws plug-in supports it.
+
+  It's a pretty easy way of invoking the aws api as a step
+  in a series of steps.
+  Why use this when you could just use the aws-cli instead? The aws cli is all
+  kinds of awesome, but I find more often than not it's not just one or two aws
+  *ad hoc* cli or aws api methods you have to execute, but especially when
+  automating and scriting you actually need to run a sequence of commands,
+  where the output of a previous command influences what you pass to the next
+  command.
+
+  Sure, you can bash it up, and I do that too, but running it as a pipeline
+  via pypyr has actually made my life quite a bit easier in terms of not having
+  to deal with conditionals, error traps and ibput validation.
 
 `pypyr <https://github.com/pypyr/pypyr-cli>`__ is a command line interface to
 run pipelines defined in yaml.
@@ -69,8 +81,29 @@ steps
 
 pypyraws.steps.client
 =====================
+What can I do with pypyraws.steps.client?
+-----------------------------------------
+This step provides an easy way of getting at the low-level AWS api from the
+pypyr pipeline runner. So in short, pretty much anything you can do with the
+AWS api, you got it, as the Big O might have said.
+
+This step lets you specify the service name and the service method you want to
+execute dynamically. You can also control the service header arguments and the
+method arguments themselves.
+
+The arguments you pass to the service and its methods are exactly as given by
+the AWS help documentation. So you do not have to learn yet another
+configuration based abstraction on top of the AWS api that might not even
+support all the methods you need.
+
+You can actually pretty much just grab the json as written from the excellent
+AWS help docs, paste it into some json that pypyr consumes and tadaaa!
+
 Supported AWS services
 ----------------------
+Clients provide a low-level interface to AWS whose methods map close to 1:1
+with the AWS REST service APIs. All service operations are supported by clients.
+
 Run any method on any of the following aws low-level client services:
 
   acm, apigateway, application-autoscaling, appstream, autoscaling,
@@ -278,7 +311,15 @@ See a worked example for `pypyr aws s3fetch here
 
 pypyraws.steps.wait
 ===================
-Run any low-level boto3 client wait from get_waiter.
+Wait for things in AWS to complete before continuing pipeline.
+
+Run any low-level boto3 client wait() from get_waiter.
+
+Waiters use a client's service operations to poll the status of an AWS resource
+and suspend execution until the AWS resource reaches the state that the waiter
+is polling for or a failure occurs while polling.
+
+http://boto3.readthedocs.io/en/latest/guide/clients.html#waiters
 
 The input context requires:
 
