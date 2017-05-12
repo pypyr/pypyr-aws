@@ -46,7 +46,7 @@ pip
 
   # pip install --upgrade pypyraws
 
-pypyr-slack depends on the ``pypyr`` cli. The above ``pip`` will install it for
+pypyraws depends on the ``pypyr`` cli. The above ``pip`` will install it for
 you if you don't have it already.
 
 Python version
