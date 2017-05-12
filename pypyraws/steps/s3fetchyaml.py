@@ -26,7 +26,7 @@ def run_step(context):
     response = pypyraws.aws.s3.get_payload(context)
 
     payload = yaml.safe_load(response)
-    logger.info("successfully parsed yaml from s3 response bytes")
+    logger.debug("successfully parsed yaml from s3 response bytes")
     context.update(payload)
     logger.info("loaded s3 yaml into pypyr context")
 

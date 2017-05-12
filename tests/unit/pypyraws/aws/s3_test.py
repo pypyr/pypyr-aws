@@ -1,12 +1,13 @@
 """service.py unit tests."""
-from unittest.mock import patch
 import pypyraws.aws.s3 as ps3
 from pypyr.context import Context
 from pypyr.errors import KeyNotInContextError
 import pytest
-
+from unittest.mock import patch
 
 # ---------------------------- get_payload ----------------------------------#
+
+
 def test_get_payload_no_s3fetch():
     """Operation exec with s3Fetch raises."""
     context = Context({'k1': 'v1'})

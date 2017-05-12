@@ -26,7 +26,7 @@ def run_step(context):
     response = pypyraws.aws.s3.get_payload(context)
 
     payload = json.load(response)
-    logger.info("successfully parsed json from s3 response bytes")
+    logger.debug("successfully parsed json from s3 response bytes")
     context.update(payload)
     logger.info("loaded s3 json into pypyr context")
 
