@@ -10,6 +10,9 @@ pypyr aws plug-in
   pronounce how you like, but I generally say *piper* as in "piping down the
   valleys wild"
 
+  `pypyr <https://github.com/pypyr/pypyr-cli>`__ is a command line interface to
+  run pipelines defined in yaml.
+
 *the pypyr aws plug-in*
   Run anything on aws. No really, anything. If the aws api supports it, the
   pypyr aws plug-in supports it.
@@ -19,16 +22,13 @@ pypyr aws plug-in
   Why use this when you could just use the aws-cli instead? The aws cli is all
   kinds of awesome, but I find more often than not it's not just one or two aws
   *ad hoc* cli or aws api methods you have to execute, but especially when
-  automating and scriting you actually need to run a sequence of commands,
+  automating and scripting you actually need to run a sequence of commands,
   where the output of a previous command influences what you pass to the next
   command.
 
   Sure, you can bash it up, and I do that too, but running it as a pipeline
   via pypyr has actually made my life quite a bit easier in terms of not having
-  to deal with conditionals, error traps and ibput validation.
-
-`pypyr <https://github.com/pypyr/pypyr-cli>`__ is a command line interface to
-run pipelines defined in yaml.
+  to deal with conditionals, error traps and input validation.
 
 |build-status| |coverage| |pypi|
 
@@ -125,8 +125,13 @@ Run any method on any of the following aws low-level client services:
 You can find full details for the supported services and what methods you can
 run against them here:  http://boto3.readthedocs.io/en/latest/reference/services/
 
+With the speed of new features and services AWS introduces, it's pretty
+unlikely I'll get round to updating the list each and every time.
+
 pypyr-aws will automatically support new services AWS releases for the boto3
-client, in case the list above gets out of date.
+client, in case the list above gets out of date. So while the document might
+not update, the code already will dynamically use new features and services on
+the boto3 client.
 
 pypyr context
 ----------------
@@ -252,7 +257,7 @@ See a worked example for `pypyr aws s3fetch here
 
 pypyraws.steps.s3fetchyaml
 ==========================
-Fetch a yaml file from s3 and put the json values into context.
+Fetch a yaml file from s3 and put the yaml structure into context.
 
 Required input context is:
 
@@ -379,17 +384,21 @@ More info here: http://boto3.readthedocs.io/en/latest/guide/configuration.html
 
 This means any of the following will work:
 
+- If you are running inside of AWS - on EC2 or inside an ECS container, it will
+  automatically use IAM role credentials if it does not find credentials in any
+  of the other places listed below.
 - In the pypyr context
 
   .. code-block:: python
 
     context['awsClientIn']['clientArgs'] = {
-        aws_access_key_id=ACCESS_KEY,
-        aws_secret_access_key=SECRET_KEY,
-        aws_session_token=SESSION_TOKEN,
+        aws_access_key_id: ACCESS_KEY,
+        aws_secret_access_key: SECRET_KEY,
+        aws_session_token: SESSION_TOKEN,
       }
 
 - $ENV variables
+
   - AWS_ACCESS_KEY_ID
   - AWS_SECRET_ACCESS_KEY
   - AWS_SESSION_TOKEN
