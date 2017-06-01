@@ -408,7 +408,7 @@ Once this step completes it adds ``awsWaitForTimedOut`` to the pypyr context.
 This is a boolean value with values:
 
 +--------------------------+---------------------------------------------------+
-| ``awsWaitForTimedOut``   | Description                                       |
+| awsWaitForTimedOut       | Description                                       |
 +--------------------------+---------------------------------------------------+
 | True                     | ``errorOnWaitTimeout=False`` and ``max_attempts`` |
 |                          | exhausted without reaching ``toBe``.              |
