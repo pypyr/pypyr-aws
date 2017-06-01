@@ -54,7 +54,7 @@ def run_step(context):
         pypyr.errors.KeyNotInContextError: awsWaitFor missing in context.
         pypyr.errors.KeyInContextHasNoValueError: awsWaitFor exists but is
                                                 None.
-        pypyr.errors.WaitTimeOut: maxAttempts exceeded without waitForField
+        pypyraws.errors.WaitTimeOut: maxAttempts exceeded without waitForField
                                   changing to toBe.
     """
     logger.debug("started")
