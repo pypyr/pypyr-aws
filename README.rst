@@ -76,7 +76,11 @@ steps
 | `pypyraws.steps.s3fetchyaml`_ | Fetch a yaml file from s3 into the pypyr        | s3Fetch (dict)               |
 |                               | context.                                        |                              |
 +-------------------------------+-------------------------------------------------+------------------------------+
-| `pypyraws.steps.wait`_        | Wait for an aws client method to complete.      | awsWaitIn (dict)             |
+| `pypyraws.steps.wait`_        | Wait for an aws client waiter method to         | awsWaitIn (dict)             |
+|                               | complete.                                       |                              |
++-------------------------------+-------------------------------------------------+------------------------------+
+| `pypyraws.steps.waitfor`_     | Wait for any aws client method to complete,     | awsWaitFor (dict)            |
+|                               | even when it doesn't have an official waiter.   |                              |
 +-------------------------------+-------------------------------------------------+------------------------------+
 
 pypyraws.steps.client
@@ -98,6 +102,9 @@ support all the methods you need.
 
 You can actually pretty much just grab the json as written from the excellent
 AWS help docs, paste it into some json that pypyr consumes and tadaaa!
+Alternatively, grab the samples from the boto3 python documentation to include
+in some yaml - the python dictionary structures map to yaml without too much
+faff.
 
 Supported AWS services
 ----------------------
@@ -360,6 +367,65 @@ The input context requires:
       arg1Name: arg1Value #optional. Dict. kwargs for wait
 
 The *awsWaitIn* context supports text `Substitutions`_.
+
+pypyraws.steps.waitfor
+======================
+Custom waiter for any aws client operation. Where `pypyraws.steps.wait`_ uses
+the official AWS waiters from the low-level client api, this step allows you to
+execute *any* aws low-level client method and wait for a specified field in
+the response to become the value you want it to be.
+
+This is especially handy for things like Beanstalk, because Elastic Beanstalk
+does not have Waiters for environment creation.
+
+The input context looks like this:
+
+.. code-block:: yaml
+
+  awsWaitFor:
+    awsClientIn: # required. awsClientIn allows the same arguments as pypyraws.steps.client.
+      serviceName: elasticbeanstalk
+      methodName: describe_environments
+      methodArgs:
+          ApplicationName: my wonderful beanstalk default application
+          EnvironmentNames:
+            - my-wonderful-environment
+          VersionLabel: v0.1
+    waitForField: '{Environments[0][Status]}' # required. format expression for field name to check in awsClient response
+    toBe: Ready # required. Stop waiting when waitForField equals this value
+    pollInterval: 30 # optional. Seconds to wait between polling attempts. Defaults to 30 if not specified.
+    maxAttempts: 10 # optional. Defaults to 10 if not specified.
+    errorOnWaitTimeout: True # optional. Defaults to True if not specified. Stop processing if maxAttempts exhausted without reaching toBe value.
+
+See `pypyraws.steps.client`_ for a full listing of available arguments under
+*awsClientIn*.
+
+If ``errorOnWaitTimeout`` is True and ``max_attempts`` exhaust before reaching
+the desired target state, pypyr will stop processing with a
+``pypyraws.errors.WaitTimeOut`` error.
+
+Once this step completes it adds ``awsWaitForTimedOut`` to the pypyr context.
+This is a boolean value with values:
+
++--------------------------+---------------------------------------------------+
+| awsWaitForTimedOut       | Description                                       |
++--------------------------+---------------------------------------------------+
+| True                     | ``errorOnWaitTimeout=False`` and ``max_attempts`` |
+|                          | exhausted without reaching ``toBe``.              |
++--------------------------+---------------------------------------------------+
+| False                    | ``waitForField``'s value becomes ``toBe`` within  |
+|                          | ``max_attempts``.                                 |
++--------------------------+---------------------------------------------------+
+
+
+The *awsWaitFor* context supports text `Substitutions`_. Do note that while
+``waitForField`` uses substitution style format strings, the substitutions are
+made against the response object that returns from the aws client call specified
+in *awsClientIn*, and not from the pypyr context itself.
+
+See a worked example for an `elastic beanstalk custom waiter for environmment
+creation here
+<https://github.com/pypyr/pypyr-example/blob/master/pipelines/aws-beanstalk-waitfor.yaml>`__.
 
 *************
 Substitutions
