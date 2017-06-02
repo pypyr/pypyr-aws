@@ -108,7 +108,7 @@ def run_step(context):
             context['awsWaitForTimedOut'] = True
             logger.warn(f"aws {service_name} {method_name} did NOT return "
                         f" {to_be}. errorOnWaitTimeout is False, so pipeline "
-                        "will continue regardless.")
+                        "will proceed to the next step anyway.")
 
     logger.debug("done")
 

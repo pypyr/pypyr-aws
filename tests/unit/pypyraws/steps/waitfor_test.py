@@ -137,7 +137,7 @@ def test_waitfor_fail_no_client_args_no_throw(mock_sleep, mock_service):
 
     mock_logger_warn.assert_called_once_with(
         'aws service name method_name did NOT return  xxx. errorOnWaitTimeout '
-        'is False, so pipeline will continue regardless.')
+        'is False, so pipeline will proceed to the next step anyway.')
 
     assert len(context) == 3
     assert context['k1'] == 'v1'
