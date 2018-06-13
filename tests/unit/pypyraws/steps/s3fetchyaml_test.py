@@ -1,4 +1,5 @@
 """s3fetchyaml.py unit tests."""
+import io
 import pypyraws.steps.s3fetchyaml  # as s3fetchyaml
 from pypyr.context import Context
 import ruamel.yaml as yaml
@@ -9,9 +10,10 @@ from unittest.mock import patch
 def test_s3fetchyaml(mock_s3):
     """Success path all the way through to the mocked boto s3 object."""
     input_dict = {'newkey': 'newvalue', 'newkey2': 'newvalue2'}
-    string_of_yaml = yaml.dump(input_dict, Dumper=yaml.RoundTripDumper)
-    bunch_of_bytes = bytes(string_of_yaml, 'utf-8')
-    mock_s3.side_effect = [{'Body': bunch_of_bytes}]
+    yaml_loader = yaml.YAML()
+    string_stream = io.StringIO()
+    yaml_loader.dump(input_dict, string_stream)
+    mock_s3.side_effect = [{'Body': string_stream.getvalue()}]
 
     context = Context({
         'k1': 'v1',
