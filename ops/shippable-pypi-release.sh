@@ -20,7 +20,7 @@ pip uninstall -y pypyraws
 python setup.py bdist_wheel
 
 # Deploy wheel
-twine upload --repository-url ${PYPI_URL} --username ${PYPI_USERNAME} --password ${PYPI_PASSWORD} dist/pypyraws-${NEW_VERSION}-py3-none-any.whl
+twine upload --username ${PYPI_USERNAME} --password ${PYPI_PASSWORD} dist/pypyraws-${NEW_VERSION}-py3-none-any.whl
 
 echo "----------Done with twine upload-------------------------------------"
 
