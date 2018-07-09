@@ -184,7 +184,7 @@ from ./ the following to upload *arb.txt* to your specified bucket:
 
 .. code-block:: bash
 
-  $ pypyr go-go-s3 --context "bucket=myuniquebucketname"
+  $ pypyr go-go-s3 "bucket=myuniquebucketname"
 
 
 See a worked example for `pypyr aws s3 here
