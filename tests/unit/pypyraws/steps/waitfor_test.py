@@ -828,7 +828,7 @@ def test_get_poll_args_substitutions():
      error_on_wait_timeout) = waitfor_step.get_poll_args(waitfor_dict, context)
 
     assert wait_for_field == 'field name'
-    assert to_be == '123.4'
+    assert to_be == 123.4
     assert poll_interval == 99
     assert max_attempts == 66
     assert not error_on_wait_timeout
