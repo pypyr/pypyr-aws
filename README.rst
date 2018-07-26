@@ -51,7 +51,7 @@ you if you don't have it already.
 
 Python version
 ==============
-Tested against Python 3.6
+Tested against Python >=3.6
 
 ********
 Examples
