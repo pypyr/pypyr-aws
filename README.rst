@@ -568,24 +568,24 @@ Day-to-day testing
 
     pytest tests/unit/arb_test_file.py
 
+*****
+Help!
+*****
+Don't Panic! For help, community or talk, join the chat on |discord|!
+
 **********
 Contribute
 **********
+Developers
+==========
+For information on how to help with pypyr, run tests and coverage, please do
+check out the `contribution guide <https://github.com/pypyr/pypyr-cli/blob/master/CONTRIBUTING.rst>`_.
+
 Bugs
 ====
 Well, you know. No one's perfect. Feel free to `create an issue
 <https://github.com/pypyr/pypyr-aws/issues/new>`_.
 
-Contribute to the pypyr project
-===============================
-The usual jazz - create an issue, fork, code, test, PR. It might be an idea to
-discuss your idea via the Issues list first before you go off and write a
-huge amount of code - you never know, something might already be in the works,
-or maybe it's not quite right for this plug-in (you're still welcome to fork
-and go wild regardless, of course, it just mightn't get merged back in here).
-
-Get in touch anyway, would love to hear from you at
-https://www.345.systems/contact.
 
 .. |build-status| image:: https://api.shippable.com/projects/58efdfe130eb380700e559a4/badge?branch=master
                     :alt: build status
@@ -599,3 +599,5 @@ https://www.345.systems/contact.
                 :alt: pypi version
                 :target: https://pypi.python.org/pypi/pypyraws/
                 :align: bottom
+
+.. |discord| replace:: `discord <https://discordapp.com/invite/8353JkB>`__

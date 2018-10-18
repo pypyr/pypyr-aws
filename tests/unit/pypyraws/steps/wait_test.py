@@ -15,9 +15,7 @@ def test_aws_wait_missing_awswaitin():
     with pytest.raises(KeyNotInContextError) as err_info:
         wait.run_step(context)
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\'awsWaitIn not found in the pypyr "
-        "context.',)")
+    assert str(err_info.value) == "awsWaitIn not found in the pypyr context."
 
 
 @patch('pypyraws.aws.service.waiter')
@@ -309,9 +307,7 @@ def test_get_waiter_args_missing_awswaitin():
         client_in, service_name, waiter_name = wait.get_waiter_args(
             context)
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\'awsWaitIn not found in the pypyr "
-        "context.',)")
+    assert str(err_info.value) == "awsWaitIn not found in the pypyr context."
 
 
 def test_get_waiter_args_missing_servicename():
@@ -327,9 +323,8 @@ def test_get_waiter_args_missing_servicename():
         client_in, service_name, waiter_name = wait.get_waiter_args(
             context)
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\"awsWaitIn missing required key for "
-        "pypyraws.steps.wait: 'serviceName'\",)")
+    assert str(err_info.value) == ("awsWaitIn missing required key for "
+                                   "pypyraws.steps.wait: 'serviceName'")
 
 
 def test_get_waiter_args_missing_waitername():
@@ -345,9 +340,8 @@ def test_get_waiter_args_missing_waitername():
         client_in, service_name, waiter_name = wait.get_waiter_args(
             context)
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\"awsWaitIn missing required key for "
-        "pypyraws.steps.wait: 'waiterName'\",)")
+    assert str(err_info.value) == ("awsWaitIn missing required key for "
+                                   "pypyraws.steps.wait: 'waiterName'")
 
 
 def test_get_waiter_args_servicename_empty():
@@ -364,9 +358,8 @@ def test_get_waiter_args_servicename_empty():
         client_in, service_name, waiter_name = wait.get_waiter_args(
             context)
 
-    assert repr(err_info.value) == (
-        "KeyInContextHasNoValueError('serviceName required in awsWaitIn "
-        "for pypyraws.steps.wait',)")
+    assert str(err_info.value) == ("serviceName required in awsWaitIn "
+                                   "for pypyraws.steps.wait")
 
 
 def test_get_waiter_args_waitername_empty():
@@ -383,8 +376,7 @@ def test_get_waiter_args_waitername_empty():
         client_in, service_name, waiter_name = wait.get_waiter_args(
             context)
 
-    assert repr(err_info.value) == (
-        "KeyInContextHasNoValueError('waiterName required in awsWaitIn "
-        "for pypyraws.steps.wait',)")
+    assert str(err_info.value) == ("waiterName required in awsWaitIn "
+                                   "for pypyraws.steps.wait")
 
 # ---------------------------- get_waiter_args------------------------------#
