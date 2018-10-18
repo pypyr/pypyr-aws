@@ -106,9 +106,10 @@ def run_step(context):
                               f"return {to_be} within {max_attempts} retries.")
         else:
             context['awsWaitForTimedOut'] = True
-            logger.warn(f"aws {service_name} {method_name} did NOT return "
-                        f" {to_be}. errorOnWaitTimeout is False, so pipeline "
-                        "will proceed to the next step anyway.")
+            logger.warning(
+                f"aws {service_name} {method_name} did NOT return "
+                f" {to_be}. errorOnWaitTimeout is False, so pipeline "
+                "will proceed to the next step anyway.")
 
     logger.debug("done")
 

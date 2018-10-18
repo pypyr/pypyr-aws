@@ -17,9 +17,9 @@ def test_waitfor_missing_awswaitfor():
     with pytest.raises(KeyNotInContextError) as err_info:
         waitfor_step.run_step(context)
 
-    assert repr(err_info.value) == (
-        'KeyNotInContextError("context[\'awsWaitFor\'] doesn\'t exist. It '
-        'must exist for pypyraws.steps.waitfor.",)')
+    assert str(err_info.value) == (
+        "context[\'awsWaitFor\'] doesn\'t exist. It "
+        "must exist for pypyraws.steps.waitfor.")
 
 
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
@@ -87,9 +87,8 @@ def test_waitfor_fail_no_client_args(mock_sleep, mock_service):
         with patch.object(logger, 'error') as mock_logger_error:
             waitfor_step.run_step(context)
 
-    assert repr(err_info.value) == ("WaitTimeOut('aws service name "
-                                    "method_name did not return xxx within "
-                                    "10 retries.',)")
+    assert str(err_info.value) == ("aws service name method_name did not "
+                                   "return xxx within 10 retries.")
 
     mock_logger_error.assert_called_once_with(
         'aws service name method_name did not return xxx within 10. '
@@ -132,7 +131,7 @@ def test_waitfor_fail_no_client_args_no_throw(mock_sleep, mock_service):
         }})
 
     logger = logging.getLogger('pypyraws.steps.waitfor')
-    with patch.object(logger, 'warn') as mock_logger_warn:
+    with patch.object(logger, 'warning') as mock_logger_warn:
         waitfor_step.run_step(context)
 
     mock_logger_warn.assert_called_once_with(

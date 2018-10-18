@@ -36,9 +36,7 @@ def test_get_awsclient_args_missing_awsclientin():
         client_in, service_name, method_name = contextargs.get_awsclient_args(
             context, 'pypyraws.steps.client')
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\'awsClientIn not found in the pypyr "
-        "context.',)")
+    assert str(err_info.value) == "awsClientIn not found in the pypyr context."
 
 
 def test_get_awsclient_args_missing_servicename():
@@ -54,9 +52,8 @@ def test_get_awsclient_args_missing_servicename():
         client_in, service_name, method_name = contextargs.get_awsclient_args(
             context, 'pypyraws.steps.client')
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\"awsClientIn missing required key for "
-        "pypyraws.steps.client: 'serviceName'\",)")
+    assert str(err_info.value) == ("awsClientIn missing required key for "
+                                   "pypyraws.steps.client: 'serviceName'")
 
 
 def test_get_awsclient_args_missing_methodname():
@@ -72,9 +69,8 @@ def test_get_awsclient_args_missing_methodname():
         client_in, service_name, method_name = contextargs.get_awsclient_args(
             context, 'pypyraws.steps.client')
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\"awsClientIn missing required key for "
-        "pypyraws.steps.client: 'methodName'\",)")
+    assert str(err_info.value) == ("awsClientIn missing required key for "
+                                   "pypyraws.steps.client: 'methodName'")
 
 
 def test_get_awsclient_args_servicename_empty():
@@ -91,9 +87,8 @@ def test_get_awsclient_args_servicename_empty():
         client_in, service_name, method_name = contextargs.get_awsclient_args(
             context, 'pypyraws.steps.client')
 
-    assert repr(err_info.value) == (
-        "KeyInContextHasNoValueError('serviceName required in awsClientIn "
-        "for pypyraws.steps.client',)")
+    assert str(err_info.value) == ("serviceName required in awsClientIn "
+                                   "for pypyraws.steps.client")
 
 
 def test_get_awsclient_args_methodname_empty():
@@ -110,9 +105,8 @@ def test_get_awsclient_args_methodname_empty():
         client_in, service_name, method_name = contextargs.get_awsclient_args(
             context, 'pypyraws.steps.client')
 
-    assert repr(err_info.value) == (
-        "KeyInContextHasNoValueError('methodName required in awsClientIn "
-        "for pypyraws.steps.client',)")
+    assert str(err_info.value) == ("methodName required in awsClientIn "
+                                   "for pypyraws.steps.client")
 
 # ---------------------------- get_awsclient_args-----------------------------#
 

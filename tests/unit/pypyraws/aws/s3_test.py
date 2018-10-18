@@ -14,9 +14,7 @@ def test_get_payload_no_s3fetch():
     with pytest.raises(KeyNotInContextError) as err_info:
         ps3.get_payload(context)
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\'s3Fetch not found in the pypyr "
-        "context.',)")
+    assert str(err_info.value) == ("s3Fetch not found in the pypyr context.")
 
 
 def test_get_payload_no_methodargs():
@@ -25,9 +23,8 @@ def test_get_payload_no_methodargs():
     with pytest.raises(KeyNotInContextError) as err_info:
         ps3.get_payload(context)
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\'s3Fetch missing required key for "
-        "pypyraws.steps.s3fetch step: methodArgs',)")
+    assert str(err_info.value) == ("s3Fetch missing required key for "
+                                   "pypyraws.steps.s3fetch step: methodArgs")
 
 
 @patch('pypyraws.aws.service.operation_exec')

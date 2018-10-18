@@ -11,9 +11,8 @@ def test_waitprep_awsclientout_missing():
         context = Context({'blah': 'blah blah'})
         prepstep.run_step(context)
 
-    assert repr(err.value) == (
-        "KeyNotInContextError(\"context['awsClientOut'] doesn't exist. It "
-        "must exist for pypyraws.steps.ecswaitprep.\",)")
+    assert str(err.value) == ("context['awsClientOut'] doesn't exist. It "
+                              "must exist for pypyraws.steps.ecswaitprep.")
 
 
 def test_waitprep_awsclientout_empty():
@@ -22,9 +21,8 @@ def test_waitprep_awsclientout_empty():
         context = Context({'awsClientOut': None})
         prepstep.run_step(context)
 
-    assert repr(err.value) == (
-        "KeyInContextHasNoValueError(\"context['awsClientOut'] must have a "
-        "value for pypyraws.steps.ecswaitprep.\",)")
+    assert str(err.value) == ("context['awsClientOut'] must have a "
+                              "value for pypyraws.steps.ecswaitprep.")
 
 
 def test_waitprep_awsclientout_no_matches():
@@ -33,10 +31,10 @@ def test_waitprep_awsclientout_no_matches():
         context = Context({'awsClientOut': {}})
         prepstep.run_step(context)
 
-    assert repr(err.value) == (
-        "KeyNotInContextError(\"Run ecswaitprep after an ecs method that "
+    assert str(err.value) == (
+        "Run ecswaitprep after an ecs method that "
         "does something with services or tasks. Couldn't find service, "
-        "serviceArns, services, task, taskArns or tasks in awsClientOut.\",)")
+        "serviceArns, services, task, taskArns or tasks in awsClientOut.")
 
 # ------------------------------ tasks ---------------------------------------#
 

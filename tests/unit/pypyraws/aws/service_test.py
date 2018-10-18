@@ -51,8 +51,7 @@ def test_op_exec_method_doesnt_exist(mock_boto):
                             method_name='arbmethod',
                             operation_args={'k1': 'v1', 'k2': 'v2'})
 
-    assert repr(err_info.value) == (
-        "AttributeError(\"Mock object has no attribute 'arbmethod'\",)")
+    assert str(err_info.value) == "Mock object has no attribute 'arbmethod'"
 
 # ---------------------------- operation_exec --------------------------------#
 

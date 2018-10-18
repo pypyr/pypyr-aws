@@ -15,9 +15,7 @@ def test_aws_client_missing_awsclientin():
     with pytest.raises(KeyNotInContextError) as err_info:
         client_step.run_step(context)
 
-    assert repr(err_info.value) == (
-        "KeyNotInContextError(\'awsClientIn not found in the pypyr "
-        "context.',)")
+    assert str(err_info.value) == "awsClientIn not found in the pypyr context."
 
 
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
