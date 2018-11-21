@@ -141,8 +141,7 @@ not update, the code already will dynamically use new features and services on
 the boto3 client.
 
 pypyr context
-----------------
-
+-------------
 Requires the following context items:
 
 .. code-block:: yaml
@@ -158,6 +157,11 @@ Requires the following context items:
       arg2Name: arg2Value
 
 The *awsClientIn* context supports text `Substitutions`_.
+
+AWS response
+------------
+After this step completes the full response is available to subsequent steps
+in the pypyr context in the *awsClientOut* key.
 
 Sample pipeline
 ---------------
