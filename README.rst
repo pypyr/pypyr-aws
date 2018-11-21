@@ -305,9 +305,10 @@ Required input context is:
     methodArgs:
       Bucket: '{bucket}'
       Key: arb.yaml
+    outKey: 'destination pypyr context key' # optional
 
-- clientArgs are passed to the aws s3 client constructor. These are optional.
-- methodArgs are passed the the s3 ``get_object`` call. The minimum required
+- *clientArgs* are passed to the aws s3 client constructor. These are optional.
+- *methodArgs* are passed the the s3 ``get_object`` call. The minimum required
   values are:
 
   - Bucket
@@ -315,6 +316,8 @@ Required input context is:
 
 - Check here for all available arguments (including SSE server-side encryption):
   http://boto3.readthedocs.io/en/latest/reference/services/s3.html#S3.Client.get_object
+- *outKey* writes fetched yaml to this context key. If not specified, yaml
+  writes directly to context root.
 
 The *s3Fetch* context supports text `Substitutions`_.
 
@@ -330,9 +333,8 @@ I.e if file yaml has
 but context ``{'eggs': 'fried'}`` already exists, returned ``context['eggs']``
 will be 'boiled'.
 
-The yaml should not be a list at the top level, but rather a mapping.
-
-So the top-level yaml should not look like this:
+If *outKey* is not specified, the yaml should not be a list at the top level,
+but rather a mapping. So the top-level yaml should not look like this:
 
 .. code-block:: yaml
 
