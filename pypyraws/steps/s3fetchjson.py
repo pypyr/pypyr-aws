@@ -1,4 +1,5 @@
 """pypyr step to fetch a json file from s3 and put it in context."""
+from collections.abc import MutableMapping
 import json
 import logging
 import pypyraws.aws.s3
@@ -16,6 +17,10 @@ def run_step(context):
                 -methodArgs
                     - Bucket: string. s3 bucket name.
                     - Key: string. s3 key name.
+                -outKey. string. If exists, write json structure to this
+                               context key. Else json writes to context root.
+
+    All inputs support formatting expressions.
 
     json parsed from the s3 file will be merged into the
     context. This will overwrite existing values if the same keys are already
@@ -28,7 +33,24 @@ def run_step(context):
 
     payload = json.load(response)
     logger.debug("successfully parsed json from s3 response bytes")
-    context.update(payload)
+
+    destination_key_expression = context['s3Fetch'].get('outKey', None)
+
+    if destination_key_expression:
+        destination_key = context.get_formatted_iterable(
+            destination_key_expression)
+        logger.debug(f"Writing json to context {destination_key}")
+        context[destination_key] = payload
+    else:
+        if not isinstance(payload, MutableMapping):
+            raise TypeError(
+                'json input should describe an object at the top '
+                'level when outKey isn\'t specified. You should have '
+                'something like {"key1": "value1", "key2": "value2"} '
+                'in the json top-level, not ["value1", "value2"]')
+
+        context.update(payload)
+
     logger.info("loaded s3 json into pypyr context")
 
     logger.debug("done")

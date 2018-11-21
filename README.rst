@@ -263,9 +263,10 @@ Required input context is:
     methodArgs:
       Bucket: '{bucket}'
       Key: arb.json
+    outKey: 'destination pypyr context key' # optional
 
-- clientArgs are passed to the aws s3 client constructor. These are optional.
-- methodArgs are passed the the s3 ``get_object`` call. The minimum required
+- *clientArgs* are passed to the aws s3 client constructor. These are optional.
+- *methodArgs* are passed the the s3 ``get_object`` call. The minimum required
   values are:
 
   - Bucket
@@ -273,6 +274,8 @@ Required input context is:
 
 - Check here for all available arguments (including SSE server-side encryption):
   http://boto3.readthedocs.io/en/latest/reference/services/s3.html#S3.Client.get_object
+- *outKey* writes fetched json to this context key. If not specified, json
+  writes directly to context root.
 
 Json parsed from the file will be merged into the pypyr context. This will
 overwrite existing values if the same keys are already in there.
@@ -280,9 +283,10 @@ overwrite existing values if the same keys are already in there.
 I.e if file json has ``{'eggs' : 'boiled'}``, but context ``{'eggs': 'fried'}``
 already exists, returned ``context['eggs']`` will be 'boiled'.
 
-The json should not be an array [] at the top level, but rather an Object.
+If *outKey* is not specified, the json should not be an Array [] at the root
+level, but rather an Object {}.
 
-The *s3Fetch* context supports text `Substitutions`_.
+The *s3Fetch* input context supports text `Substitutions`_.
 
 See a worked example for `pypyr aws s3fetch here
 <https://github.com/pypyr/pypyr-example/blob/master/pipelines/aws-s3fetch.yaml>`__.
