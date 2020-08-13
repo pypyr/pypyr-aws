@@ -27,8 +27,8 @@ setup(
     # https://packaging.python.org/en/latest/single_source_version.html
     version=pypyraws.version.__version__,
 
-    description="""pypyr pipeline runner AWS plugin. Steps for ECS, S3,
-            Beanstalk.""",
+    description=(
+        "pypyr pipeline runner AWS plugin. Steps for ECS, S3, Beanstalk."),
     long_description=long_description,
 
     # The project's main homepage.
@@ -64,7 +64,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='pypyr aws plugin devops pipeline runner',
+    keywords='pypyr,aws,plugin,devops,task-runner,pipeline',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
@@ -108,9 +108,9 @@ setup(
     # "scripts" keyword. Entry points provide cross-platform support and allow
     # pip to create the appropriate form of executable for the target platform.
     # entry_points={
-        # 'pypyr': ['aws=pypyraws']
-        # 'pypyr': [
-        #    'pypyr.aws=pypyraws'
-        # ]
+    # 'pypyr': ['aws=pypyraws']
+    # 'pypyr': [
+    #    'pypyr.aws=pypyraws'
+    # ]
     # },
 )

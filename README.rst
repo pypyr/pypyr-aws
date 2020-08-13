@@ -2,15 +2,15 @@
 pypyr aws plug-in
 #################
 
-.. image:: https://pypyr.io/images/pypyr-logo-small.png
-    :alt: pypyr-logo
-    :align: left
+.. image:: https://pypyr.io/images/2x1/pypyr-taskrunner-yaml-pipeline-automation-1200x600.1bd2401e4f8071d85bcb1301128e4717f0f54a278e91c9c350051191de9d22c0.png
+    :alt: pypyr task runner for automation pipelines
+    :align: center
 
 *pypyr*
   pronounce how you like, but I generally say *piper* as in "piping down the
   valleys wild"
 
-  `pypyr <https://github.com/pypyr/pypyr-cli>`__ is a command line interface to
+  `pypyr <https://pypyr.io>`__ is a command line interface to
   run pipelines defined in yaml.
 
 *the pypyr aws plug-in*
@@ -522,7 +522,7 @@ Do remember not to fling your key & secret around as shell arguments - it could
 very easily leak that way into logs or expose via a ``ps``. I generally use one
 of the pypyr built-in context parsers like *pypyr.parser.jsonfile* or
 *pypyr.parser.yamlfile*, see
-`here for details <https://github.com/pypyr/pypyr-cli#built-in-context-parsers>`__.
+`pypyr built-in context parsers <https://pypyr.io/docs/context-parsers/>`__.
 
 Do remember also that $ENV variables are not a particularly secure place to
 keep your secrets.
@@ -589,7 +589,7 @@ Contribute
 Developers
 ==========
 For information on how to help with pypyr, run tests and coverage, please do
-check out the `contribution guide <https://github.com/pypyr/pypyr-cli/blob/master/CONTRIBUTING.rst>`_.
+check out the `pypyr contribution guide <https://pypyr.io/docs/contributing/>`_.
 
 Bugs
 ====
