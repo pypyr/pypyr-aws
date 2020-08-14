@@ -91,3 +91,6 @@ ENV/
 
 # Shippable
 shippable/
+
+# editor
+.vscode/
