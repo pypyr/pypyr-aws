@@ -9,7 +9,7 @@ import pytest
 # ---------------------------- run_step -------------------------------------#
 
 def test_aws_client_missing_awsclientin():
-    """Missing awsClientIn raises"""
+    """Missing awsClientIn raises."""
     context = Context({'k1': 'v1'})
 
     with pytest.raises(KeyNotInContextError) as err_info:
@@ -23,7 +23,7 @@ def test_aws_client_missing_awsclientin():
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
                                                             'rk2': 'rv2'})
 def test_aws_client_pass_no_args(mock_service):
-    """Successful run with no client args"""
+    """Successful run with no client args."""
     context = Context({
         'k1': 'v1',
         'awsClientIn': {
@@ -51,7 +51,7 @@ def test_aws_client_pass_no_args(mock_service):
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
                                                             'rk2': 'rv2'})
 def test_aws_client_pass_client_args(mock_service):
-    """Successful run with client args"""
+    """Successful run with client args."""
     context = Context({
         'k1': 'v1',
         'awsClientIn': {
@@ -82,7 +82,7 @@ def test_aws_client_pass_client_args(mock_service):
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
                                                             'rk2': 'rv2'})
 def test_aws_client_pass_method_args(mock_service):
-    """Successful run with method args"""
+    """Successful run with method args."""
     context = Context({
         'k1': 'v1',
         'awsClientIn': {
@@ -113,7 +113,7 @@ def test_aws_client_pass_method_args(mock_service):
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
                                                             'rk2': 'rv2'})
 def test_aws_client_pass_all_args(mock_service):
-    """Successful run with client and method args"""
+    """Successful run with client and method args."""
     context = Context({
         'k1': 'v1',
         'awsClientIn': {
@@ -151,7 +151,7 @@ def test_aws_client_pass_all_args(mock_service):
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
                                                             'rk2': 'rv2'})
 def test_aws_client_substitute_all_args(mock_service):
-    """Successful substitution run with client and method args"""
+    """Successful substitution run with client and method args."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -191,7 +191,7 @@ def test_aws_client_substitute_all_args(mock_service):
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
                                                             'rk2': 'rv2'})
 def test_aws_client_substitute_no_client_method_args(mock_service):
-    """Successful substitution run with no client and no method args"""
+    """Successful substitution run with no client and no method args."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -225,7 +225,7 @@ def test_aws_client_substitute_no_client_method_args(mock_service):
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
                                                             'rk2': 'rv2'})
 def test_aws_client_substitute_no_client_args(mock_service):
-    """Successful run with no client but method args"""
+    """Successful run with no client but method args."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -262,7 +262,7 @@ def test_aws_client_substitute_no_client_args(mock_service):
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',
                                                             'rk2': 'rv2'})
 def test_aws_client_substitute_no_method_args(mock_service):
-    """Successful run with client but no method args"""
+    """Successful run with client but no method args."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',

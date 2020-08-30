@@ -1,0 +1,2 @@
+package_name: pypyraws
+version_module_name: 'pypyraws.version'

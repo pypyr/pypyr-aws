@@ -29,7 +29,7 @@ def test_get_payload_no_methodargs():
 
 @patch('pypyraws.aws.service.operation_exec')
 def test_aws_client_pass(mock_s3):
-    """Successful run with client args"""
+    """Successful run with client args."""
     mock_s3.side_effect = [{'Body': b'bunchofbytes'}]
 
     context = Context({
@@ -73,7 +73,7 @@ def test_aws_client_pass(mock_s3):
 
 @patch('pypyraws.aws.service.operation_exec')
 def test_aws_client_pass_no_client_args(mock_s3):
-    """Successful run with no client args"""
+    """Successful run with no client args."""
     mock_s3.side_effect = [{'Body': b'bunchofbytes'}]
 
     context = Context({
@@ -114,7 +114,7 @@ def test_aws_client_pass_no_client_args(mock_s3):
 
 @patch('pypyraws.aws.service.operation_exec')
 def test_aws_client_pass_substitutions(mock_s3):
-    """Successful run with client args"""
+    """Successful run with client args."""
     mock_s3.side_effect = [{'Body': b'bunchofbytes'}]
 
     context = Context({

@@ -16,7 +16,7 @@ import pypyraws.version
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
@@ -28,11 +28,21 @@ setup(
     version=pypyraws.version.__version__,
 
     description=(
-        "pypyr pipeline runner AWS plugin. Steps for ECS, S3, Beanstalk."),
+        "pypyr task runner AWS plugin. Automate services like ECS, S3, "
+        "Beanstalk & EC2 with automation pipelines without writing having to "
+        "write code."),
     long_description=long_description,
+    long_description_content_type='text/markdown',
 
     # The project's main homepage.
-    url='https://github.com/pypyr/pypyr-aws',
+    url='https://pypyr.io/',
+
+    project_urls={
+        'Documentation': 'https://pypyr.io/docs/plugins/aws/',
+        'Source': 'https://github.com/pypyr/pypyr-aws',
+        'Release notes': 'https://pypyr.io/updates/releases/',
+        'Tracker': 'https://github.com/pypyr/pypyr-aws/issues/',
+    },
 
     # Author details
     author='Thomas Gaigher',
@@ -64,7 +74,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='pypyr,aws,plugin,devops,task-runner,pipeline',
+    keywords='pypyr,aws,plugin,devops,task-runner,pipeline,automation',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
@@ -86,9 +96,18 @@ setup(
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={
-        'dev': ['check-manifest', 'flake8'],
-        'test': ['pytest', 'pytest-cov', 'tox'],
-        'deploy': ['bumpversion', 'twine']
+        'dev': [
+            'bumpversion',
+            'codecov',
+            'flake8',
+            'flake8-docstrings',
+            'pypyr',
+            'pytest',
+            'pytest-cov',
+            'setuptools',
+            'twine',
+            'wheel'
+        ]
     },
 
     # If there are data files included in your packages that need to be

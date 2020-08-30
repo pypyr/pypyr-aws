@@ -1,4 +1,4 @@
-"""s3 higher-level functions"""
+"""s3 higher-level functions."""
 import logging
 import pypyraws.aws.service
 from pypyr.errors import KeyNotInContextError
@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_payload(context):
-    """Gets object from s3, reads underlying http stream, returns bytes.
+    """Get object from s3, reads underlying http stream, returns bytes.
 
     Args:
         context: pypyr.context.Context. Mandatory. Must contain key:

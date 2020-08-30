@@ -9,7 +9,7 @@ import pytest
 # ---------------------------- run_step -------------------------------------#
 
 def test_aws_wait_missing_awswaitin():
-    """Missing awsClientIn raises"""
+    """Missing awsClientIn raises."""
     context = Context({'k1': 'v1'})
 
     with pytest.raises(KeyNotInContextError) as err_info:
@@ -22,7 +22,7 @@ def test_aws_wait_missing_awswaitin():
 
 @patch('pypyraws.aws.service.waiter')
 def test_aws_wait_pass_no_args(mock_waiter):
-    """Successful run with no client args"""
+    """Successful run with no client args."""
     context = Context({
         'k1': 'v1',
         'awsWaitIn': {
@@ -49,7 +49,7 @@ def test_aws_wait_pass_no_args(mock_waiter):
 
 @patch('pypyraws.aws.service.waiter')
 def test_aws_wait_pass_waiter_args(mock_waiter):
-    """Successful run with waiter args"""
+    """Successful run with waiter args."""
     context = Context({
         'k1': 'v1',
         'awsWaitIn': {
@@ -79,7 +79,7 @@ def test_aws_wait_pass_waiter_args(mock_waiter):
 
 @patch('pypyraws.aws.service.waiter')
 def test_aws_waiter_pass_wait_args(mock_waiter):
-    """Successful run with wait args"""
+    """Successful run with wait args."""
     context = Context({
         'k1': 'v1',
         'awsWaitIn': {
@@ -109,7 +109,7 @@ def test_aws_waiter_pass_wait_args(mock_waiter):
 
 @patch('pypyraws.aws.service.waiter')
 def test_aws_client_pass_all_args(mock_waiter):
-    """Successful run with waiter and wait args"""
+    """Successful run with waiter and wait args."""
     context = Context({
         'k1': 'v1',
         'awsWaitIn': {
@@ -142,7 +142,7 @@ def test_aws_client_pass_all_args(mock_waiter):
 
 @patch('pypyraws.aws.service.waiter')
 def test_aws_client_pass_all_args_substitutions(mock_waiter):
-    """Successful run with waiter and wait args substitutions"""
+    """Successful run with waiter and wait args substitutions."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -179,7 +179,7 @@ def test_aws_client_pass_all_args_substitutions(mock_waiter):
 
 @patch('pypyraws.aws.service.waiter')
 def test_aws_client_pass_no_waiterargs_substitutions(mock_waiter):
-    """Successful run with no waiter, but with wait args substitutions"""
+    """Successful run with no waiter, but with wait args substitutions."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -213,7 +213,7 @@ def test_aws_client_pass_no_waiterargs_substitutions(mock_waiter):
 
 @patch('pypyraws.aws.service.waiter')
 def test_aws_client_pass_no_waitargs_substitutions(mock_waiter):
-    """Successful run with waiter but no wait args substitutions"""
+    """Successful run with waiter but no wait args substitutions."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -247,7 +247,7 @@ def test_aws_client_pass_no_waitargs_substitutions(mock_waiter):
 
 @patch('pypyraws.aws.service.waiter')
 def test_aws_client_pass_no_opt_args_substitutions(mock_waiter):
-    """Successful run with no optional args substitutions"""
+    """Successful run with no optional args substitutions."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -281,7 +281,7 @@ def test_aws_client_pass_no_opt_args_substitutions(mock_waiter):
 
 
 def test_get_waiter_args_pass():
-    """get_service_args pass"""
+    """get_service_args pass."""
     context = Context({
         'k1': 'v1',
         'awsWaitIn': {
@@ -302,7 +302,7 @@ def test_get_waiter_args_pass():
 
 
 def test_get_waiter_args_missing_awswaitin():
-    """Missing awsWaiterIn raises"""
+    """Missing awsWaiterIn raises."""
     context = Context({'k1': 'v1'})
 
     with pytest.raises(KeyNotInContextError) as err_info:
@@ -315,7 +315,7 @@ def test_get_waiter_args_missing_awswaitin():
 
 
 def test_get_waiter_args_missing_servicename():
-    """Missing serviceName raises"""
+    """Missing serviceName raises."""
     context = Context({
         'k1': 'v1',
         'awsWaitIn': {
@@ -332,7 +332,7 @@ def test_get_waiter_args_missing_servicename():
 
 
 def test_get_waiter_args_missing_waitername():
-    """Missing waiterName raises"""
+    """Missing waiterName raises."""
     context = Context({
         'k1': 'v1',
         'awsWaitIn': {
@@ -349,7 +349,7 @@ def test_get_waiter_args_missing_waitername():
 
 
 def test_get_waiter_args_servicename_empty():
-    """Empty serviceName raises"""
+    """Empty serviceName raises."""
     context = Context({
         'k1': 'v1',
         'awsWaitIn': {
@@ -367,7 +367,7 @@ def test_get_waiter_args_servicename_empty():
 
 
 def test_get_waiter_args_waitername_empty():
-    """Whitespace serviceName raises"""
+    """Whitespace serviceName raises."""
     context = Context({
         'k1': 'v1',
         'awsWaitIn': {
