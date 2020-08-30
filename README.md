@@ -26,7 +26,7 @@ deal with conditionals, error traps and input validation.
 
 [![build status](https://github.com/pypyr/pypyr-aws/workflows/lint-test-build/badge.svg)](https://github.com/pypyr/pypyr-aws/actions)
 [![coverage status](https://codecov.io/gh/pypyr/pypyr-aws/branch/master/graph/badge.svg)](https://codecov.io/gh/pypyr/pypyr-aws)[![pypi version](https://badge.fury.io/py/pypyraws.svg)](https://pypi.python.org/pypi/pypyraws/)
-[![apache 2.0 license](https://img.shields.io/github/license/pypyr/pypyr-slack)](https://opensource.org/licenses/Apache-2.0)
+[![apache 2.0 license](https://img.shields.io/github/license/pypyr/pypyr-aws)](https://opensource.org/licenses/Apache-2.0)
 
 
 ## installation
