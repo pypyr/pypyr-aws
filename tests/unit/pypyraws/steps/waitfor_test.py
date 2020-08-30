@@ -11,7 +11,7 @@ from unittest.mock import call, patch
 
 
 def test_waitfor_missing_awswaitfor():
-    """Missing awsWaitFor raises"""
+    """Missing awsWaitFor raises."""
     context = Context({'k1': 'v1'})
 
     with pytest.raises(KeyNotInContextError) as err_info:
@@ -26,7 +26,7 @@ def test_waitfor_missing_awswaitfor():
                                                             'rk2': 'rv2'})
 @patch('time.sleep')
 def test_waitfor_pass_1st_time_no_client_args(mock_sleep, mock_service):
-    """Successful run with no client args"""
+    """Successful run with no client args."""
     context = Context({
         'k1': 'v1',
         'awsWaitFor': {
@@ -69,7 +69,7 @@ def test_waitfor_pass_1st_time_no_client_args(mock_sleep, mock_service):
                                                             'rk2': 'rv2'})
 @patch('time.sleep')
 def test_waitfor_fail_no_client_args(mock_sleep, mock_service):
-    """Fail run with no client args"""
+    """Fail run with no client args."""
     context = Context({
         'k1': 'v1',
         'awsWaitFor': {
@@ -116,7 +116,7 @@ def test_waitfor_fail_no_client_args(mock_sleep, mock_service):
                                                             'rk2': 'rv2'})
 @patch('time.sleep')
 def test_waitfor_fail_no_client_args_no_throw(mock_sleep, mock_service):
-    """Fail run with no client args and no error thrown"""
+    """Fail run with no client args and no error thrown."""
     context = Context({
         'k1': 'v1',
         'awsWaitFor': {
@@ -209,7 +209,7 @@ def test_waitfor_pass_client_args(mock_sleep, mock_service):
                                                             'rk2': 'rv2'})
 @patch('time.sleep')
 def test_waitfor_pass_method_args(mock_sleep, mock_service):
-    """Successful run with method args pass on 2 with int"""
+    """Successful run with method args pass on 2 with int."""
     mock_service.side_effect = [
         {'rk1': 'rv1',
          'rk2': 'rv2'},  # 1
@@ -308,7 +308,7 @@ def test_waitfor_pass_all_args(mock_sleep, mock_service):
 @patch('pypyraws.aws.service.operation_exec')
 @patch('time.sleep')
 def test_waitfor_substitute_all_args(mock_sleep, mock_service):
-    """Successful substitution run with client and method args"""
+    """Successful substitution run with client and method args."""
     mock_service.side_effect = [
         {'rk1': 'rv1',
          'rk2': True},
@@ -366,7 +366,7 @@ def test_waitfor_substitute_all_args(mock_sleep, mock_service):
                                                             'rk2': 123})
 @patch('time.sleep')
 def test_waitfor_substitute_no_client_meth_args(mock_sleep, mock_service):
-    """Successful substitution run with no client and no method args"""
+    """Successful substitution run with no client and no method args."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -412,7 +412,7 @@ def test_waitfor_substitute_no_client_meth_args(mock_sleep, mock_service):
                                                             'rk2': 'rv2'})
 @patch('time.sleep')
 def test_aws_waitfor_substitute_no_client_args(mock_sleep, mock_service):
-    """Successful run with no client but method args"""
+    """Successful run with no client but method args."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -460,7 +460,7 @@ def test_aws_waitfor_substitute_no_client_args(mock_sleep, mock_service):
                                                             'rk2': 123.4})
 @patch('time.sleep')
 def test_aws_waitfor_substitute_no_method_args(mock_sleep, mock_service):
-    """Successful run with client but no method args"""
+    """Successful run with client but no method args."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -513,7 +513,7 @@ def test_aws_waitfor_substitute_no_method_args(mock_sleep, mock_service):
                                                                  }
                                                             ]})
 def test_execute_awsclientmethod_parse_response_top_string(mock_service):
-    """Successful response parsing"""
+    """Successful response parsing."""
     assert waitfor_step.execute_aws_client_method(service_name='service name',
                                                   method_name='method name',
                                                   client_args={
@@ -576,7 +576,7 @@ def test_execute_awsclientmethod_parse_response_path_float(mock_service):
                                                                  }
                                                             ]})
 def test_execute_awsclientmethod_parse_response_path_int(mock_service):
-    """Successful response parsing to a complex path with int type"""
+    """Successful response parsing to a complex path with int type."""
     assert waitfor_step.execute_aws_client_method(service_name='service name',
                                                   method_name='method name',
                                                   client_args={
@@ -607,7 +607,7 @@ def test_execute_awsclientmethod_parse_response_path_int(mock_service):
                                                                  }
                                                             ]})
 def test_execute_awsclientmethod_parse_response_path_bool_true(mock_service):
-    """Successful response parsing to a complex path with bool type True"""
+    """Successful response parsing to a complex path with bool type True."""
     assert waitfor_step.execute_aws_client_method(service_name='service name',
                                                   method_name='method name',
                                                   client_args={
@@ -732,7 +732,7 @@ def test_execute_awsclientmethod_parse_false_path_bool_true(mock_service):
                                                                  }
                                                             ]})
 def test_execute_awsclientmethod_parse_response_path_dict(mock_service):
-    """Successful response parsing"""
+    """Successful response parsing."""
     assert waitfor_step.execute_aws_client_method(
         service_name='service name',
         method_name='method name',
@@ -758,7 +758,7 @@ def test_execute_awsclientmethod_parse_response_path_dict(mock_service):
 
 
 def test_get_poll_args_defaults():
-    """All defaults assigned"""
+    """All defaults assigned."""
     context = Context({
         'waitFor': {
             'waitForField': 'field name',

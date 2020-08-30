@@ -40,7 +40,7 @@ def test_waitprep_awsclientout_no_matches():
 
 
 def test_waitprep_task_no_cluster():
-    """task with cluster pass"""
+    """Task with cluster pass."""
     context = Context({
         'awsClientOut': {
             'task': {
@@ -58,7 +58,7 @@ def test_waitprep_task_no_cluster():
 
 
 def test_waitprep_task_with_cluster():
-    """service with no cluster pass"""
+    """Service with no cluster pass."""
     context = Context({
         'awsClientOut': {
             'task': {
@@ -128,7 +128,7 @@ def test_waitprep_tasks_no_cluster():
 
 
 def test_waitprep_taskarns_with_no_cluster():
-    """taskarns with no cluster pass"""
+    """Taskarns with no cluster pass."""
     context = Context({
         'awsClientOut': {'taskArns': ['one', 'two', 'three'],
                          'NextToken': 'string'}
@@ -141,7 +141,7 @@ def test_waitprep_taskarns_with_no_cluster():
 
 
 def test_waitprep_taskarns_with_cluster():
-    """taskarns with cluster pass"""
+    """Taskarns with cluster pass."""
     context = Context({
         'awsClientOut': {'taskArns': ['one', 'two', 'three'],
                          'NextToken': 'string'},
@@ -201,7 +201,7 @@ def test_waitprep_overwrite_existing_waitargs():
 
 
 def test_waitprep_service_no_cluster():
-    """service with cluster pass"""
+    """Service with cluster pass."""
     context = Context({
         'awsClientOut': {
             'service': {
@@ -219,7 +219,7 @@ def test_waitprep_service_no_cluster():
 
 
 def test_waitprep_service_with_cluster():
-    """service with no cluster pass"""
+    """Service with no cluster pass."""
     context = Context({
         'awsClientOut': {
             'service': {
@@ -238,7 +238,7 @@ def test_waitprep_service_with_cluster():
 
 
 def test_waitprep_servicearns_with_no_cluster():
-    """taskarns with no cluster pass"""
+    """Taskarns with no cluster pass."""
     context = Context({
         'awsClientOut': {'serviceArns': ['one', 'two', 'three'],
                          'NextToken': 'string'}
@@ -251,7 +251,7 @@ def test_waitprep_servicearns_with_no_cluster():
 
 
 def test_waitprep_servicearns_with_cluster():
-    """taskarns with cluster pass"""
+    """Taskarns with cluster pass."""
     context = Context({
         'awsClientOut': {'serviceArns': ['one', 'two', 'three'],
                          'NextToken': 'string'},
@@ -292,7 +292,7 @@ def test_waitprep_services_with_cluster():
 
 
 def test_waitprep_services_no_cluster():
-    """services parsed. Uses 1st task cluster."""
+    """Services parsed. Uses 1st task cluster."""
     context = Context({
         'awsClientOut': {'services': [
             {

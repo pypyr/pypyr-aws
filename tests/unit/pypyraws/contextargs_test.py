@@ -8,7 +8,7 @@ import pytest
 
 
 def test_get_awsclient_args_pass():
-    """get_awsclient_args pass"""
+    """get_awsclient_args pass."""
     context = Context({
         'k1': 'v1',
         'awsClientIn': {
@@ -29,7 +29,7 @@ def test_get_awsclient_args_pass():
 
 
 def test_get_awsclient_args_missing_awsclientin():
-    """Missing awsClientIn raises"""
+    """Missing awsClientIn raises."""
     context = Context({'k1': 'v1'})
 
     with pytest.raises(KeyNotInContextError) as err_info:
@@ -42,7 +42,7 @@ def test_get_awsclient_args_missing_awsclientin():
 
 
 def test_get_awsclient_args_missing_servicename():
-    """Missing serviceName raises"""
+    """Missing serviceName raises."""
     context = Context({
         'k1': 'v1',
         'awsClientIn': {
@@ -59,7 +59,7 @@ def test_get_awsclient_args_missing_servicename():
 
 
 def test_get_awsclient_args_missing_methodname():
-    """Missing methodName raises"""
+    """Missing methodName raises."""
     context = Context({
         'k1': 'v1',
         'awsClientIn': {
@@ -76,7 +76,7 @@ def test_get_awsclient_args_missing_methodname():
 
 
 def test_get_awsclient_args_servicename_empty():
-    """Empty serviceName raises"""
+    """Empty serviceName raises."""
     context = Context({
         'k1': 'v1',
         'awsClientIn': {
@@ -94,7 +94,7 @@ def test_get_awsclient_args_servicename_empty():
 
 
 def test_get_awsclient_args_methodname_empty():
-    """Whitespace serviceName raises"""
+    """Whitespace serviceName raises."""
     context = Context({
         'k1': 'v1',
         'awsClientIn': {
@@ -116,7 +116,7 @@ def test_get_awsclient_args_methodname_empty():
 
 
 def test_getformatted_iterable_pass():
-    """get_formatted_iterable passes"""
+    """get_formatted_iterable passes."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',
@@ -143,7 +143,7 @@ def test_getformatted_iterable_pass():
 
 
 def test_getformatted_iterable_none_pass():
-    """get_formatted_iterable none returns none"""
+    """get_formatted_iterable none returns none."""
     context = Context({
         'k1': 'v1',
         'k2': 'v2',

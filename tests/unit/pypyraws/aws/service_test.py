@@ -60,7 +60,7 @@ def test_op_exec_method_doesnt_exist(mock_boto):
 
 @patch('boto3.client')
 def test_waiter_no_client_args(mock_boto):
-    """waiter with no client args pass."""
+    """Waiter with no client args pass."""
     mock_waiter = MagicMock()
     mock_boto.return_value.get_waiter = mock_waiter
 
@@ -75,7 +75,7 @@ def test_waiter_no_client_args(mock_boto):
 
 @patch('boto3.client')
 def test_waiter_with_client_args(mock_boto):
-    """waiter with client args pass."""
+    """Waiter with client args pass."""
     mock_waiter = MagicMock()
     mock_boto.return_value.get_waiter = mock_waiter
 

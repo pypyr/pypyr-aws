@@ -67,7 +67,7 @@ def run_step(context):
 
 
 def get_waiter_args(context):
-    """Gets required args from context for this step.
+    """Get required args from context for this step.
 
     Args:
         context - dict. context.

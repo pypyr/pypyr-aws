@@ -23,7 +23,7 @@ def test_wait_timeout_raises():
 
 
 def test_wait_timeout_inheritance():
-    """WaitTimeOut should inherit all the way up to pypyr Error."""
+    """The WaitTimeOut should inherit all the way up to pypyr Error."""
     # confirm subclassed from pypyr root error
     err = WaitTimeOut()
     assert isinstance(err, PypyrAwsError)

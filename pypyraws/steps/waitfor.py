@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def run_step(context):
-    """Custom waiter for any aws client operation.
+    """Wait for any aws client operation.
 
     All of the awsWaitFor descendant values support {key}
     string interpolation, except waitForField.
@@ -153,7 +153,7 @@ def execute_aws_client_method(service_name,
 
 
 def get_poll_args(waitfor_dict, context):
-    """Gets polling arguments from waitfor_dict.
+    """Get polling arguments from waitfor_dict.
 
     Args:
         waitfor_dict: The awsWaitFor dict
