@@ -45,15 +45,8 @@ def run_step(context):
     client_in, service_name, waiter_name = get_waiter_args(context)
 
     waiter_args = client_in.get('waiterArgs', None)
-    if waiter_args is not None:
-        waiter_args = context.get_formatted_iterable(waiter_args)
 
     wait_args = client_in.get('waitArgs', None)
-    if wait_args is not None:
-        wait_args = context.get_formatted_iterable(wait_args)
-
-    waiter_name = context.get_formatted_string(waiter_name)
-    service_name = context.get_formatted_string(service_name)
 
     logger.info(f"Waiting for {waiter_name} on aws {service_name}.")
 
@@ -80,8 +73,9 @@ def get_waiter_args(context):
         pypyr.errors.KeyInContextHasNoValueError: Required key exists but is
                                                   empty or None.
     """
+    context.assert_key_has_value(key='awsWaitIn', caller=__name__)
+    client_in = context.get_formatted('awsWaitIn')
     try:
-        client_in = context['awsWaitIn']
         service_name = client_in['serviceName']
         waiter_name = client_in['waiterName']
     except KeyError as err:

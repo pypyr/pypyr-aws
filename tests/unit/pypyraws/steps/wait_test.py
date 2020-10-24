@@ -16,8 +16,8 @@ def test_aws_wait_missing_awswaitin():
         wait.run_step(context)
 
     assert str(err_info.value) == (
-        "awsWaitIn missing required key for pypyraws.steps.wait: "
-        "awsWaitIn not found in the pypyr context.")
+        "context['awsWaitIn'] doesn't exist. It must exist for "
+        "pypyraws.steps.wait.")
 
 
 @patch('pypyraws.aws.service.waiter')
@@ -310,8 +310,8 @@ def test_get_waiter_args_missing_awswaitin():
             context)
 
     assert str(err_info.value) == (
-        "awsWaitIn missing required key for pypyraws.steps.wait: "
-        "awsWaitIn not found in the pypyr context.")
+        "context['awsWaitIn'] doesn't exist. It must exist for "
+        "pypyraws.steps.wait.")
 
 
 def test_get_waiter_args_missing_servicename():
