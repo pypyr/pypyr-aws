@@ -51,7 +51,7 @@ def test_s3fetchyaml_with_destination(mock_s3):
                            'Key': 'key name',
                            'SSECustomerAlgorithm': 'sse alg',
                            'SSECustomerKey': 'sse key'},
-            'outKey': 'writehere'
+            'key': 'writehere'
         }})
 
     pypyraws.steps.s3fetchyaml.run_step(context)
@@ -66,7 +66,7 @@ def test_s3fetchyaml_with_destination(mock_s3):
                            'Key': 'key name',
                            'SSECustomerAlgorithm': 'sse alg',
                            'SSECustomerKey': 'sse key'},
-            'outKey': 'writehere'},
+            'key': 'writehere'},
         'writehere': [1, 2, 3]
     }
 
@@ -88,7 +88,7 @@ def test_s3fetchyaml_with_destination_int(mock_s3):
                            'Key': 'key name',
                            'SSECustomerAlgorithm': 'sse alg',
                            'SSECustomerKey': 'sse key'},
-            'outKey': 99},
+            'key': 99},
         99: 'blah'
     })
 
@@ -99,8 +99,8 @@ def test_s3fetchyaml_with_destination_int(mock_s3):
 
 
 @patch('pypyraws.aws.service.operation_exec')
-def test_s3fetchyaml_with_destination_formatting(mock_s3):
-    """Yaml writes to destination key found by formatting expression."""
+def test_s3fetchyaml_with_destination_formatting_old(mock_s3):
+    """Test deprecated outKey still works."""
     input = {'1': 2, '2': 3}
     yaml_loader = yaml.YAML()
     string_stream = io.StringIO()
@@ -130,6 +130,40 @@ def test_s3fetchyaml_with_destination_formatting(mock_s3):
                        'SSECustomerAlgorithm': 'sse alg',
                        'SSECustomerKey': 'sse key'},
         'outKey': '{keyhere[sub][0]}'}
+
+
+@patch('pypyraws.aws.service.operation_exec')
+def test_s3fetchyaml_with_destination_formatting(mock_s3):
+    """Yaml writes to destination key found by formatting expression."""
+    input = {'1': 2, '2': 3}
+    yaml_loader = yaml.YAML()
+    string_stream = io.StringIO()
+    yaml_loader.dump(input, string_stream)
+    mock_s3.side_effect = [{'Body': string_stream.getvalue()}]
+
+    context = Context({
+        'keyhere': {'sub': ['outkey', 2, 3]},
+        's3Fetch': {
+            'clientArgs': {'ck1': 'cv1', 'ck2': 'cv2'},
+            'methodArgs': {'Bucket': 'bucket name',
+                           'Key': 'key name',
+                           'SSECustomerAlgorithm': 'sse alg',
+                           'SSECustomerKey': 'sse key'},
+            'key': '{keyhere[sub][0]}'},
+    })
+
+    pypyraws.steps.s3fetchyaml.run_step(context)
+
+    assert len(context) == 3
+    assert context['outkey'] == {'1': 2, '2': 3}
+    assert context['keyhere'] == {'sub': ['outkey', 2, 3]}
+    assert context['s3Fetch'] == {
+        'clientArgs': {'ck1': 'cv1', 'ck2': 'cv2'},
+        'methodArgs': {'Bucket': 'bucket name',
+                       'Key': 'key name',
+                       'SSECustomerAlgorithm': 'sse alg',
+                       'SSECustomerKey': 'sse key'},
+        'key': '{keyhere[sub][0]}'}
 
 
 @patch('pypyraws.aws.service.operation_exec')
