@@ -8,20 +8,20 @@ from unittest.mock import patch
 # ---------------------------- get_payload ----------------------------------#
 
 
-def test_get_payload_no_s3fetch():
-    """Operation exec with s3Fetch raises."""
+def test_get_fetch_input_no_s3fetch():
+    """Operation exec with no s3Fetch raises."""
     context = Context({'k1': 'v1'})
     with pytest.raises(KeyNotInContextError) as err_info:
-        ps3.get_payload(context)
+        ps3.get_fetch_input(context, 'arb')
 
-    assert str(err_info.value) == ("s3Fetch not found in the pypyr context.")
+    assert str(err_info.value) == (
+        "context['s3Fetch'] doesn't exist. It must exist for arb.")
 
 
 def test_get_payload_no_methodargs():
     """Operation exec with s3Fetch raises."""
-    context = Context({'s3Fetch': {'k1': 'v1'}})
     with pytest.raises(KeyNotInContextError) as err_info:
-        ps3.get_payload(context)
+        ps3.get_payload({'s3Fetch': {'k1': 'v1'}})
 
     assert str(err_info.value) == ("s3Fetch missing required key for "
                                    "pypyraws.steps.s3fetch step: methodArgs")
@@ -43,7 +43,7 @@ def test_aws_client_pass(mock_s3):
                            'SSECustomerAlgorithm': 'sse alg',
                            'SSECustomerKey': 'sse key'}
         }})
-    payload = ps3.get_payload(context)
+    payload = ps3.get_payload(context['s3Fetch'])
 
     assert payload
     assert payload == b'bunchofbytes'
@@ -86,7 +86,7 @@ def test_aws_client_pass_no_client_args(mock_s3):
                            'SSECustomerAlgorithm': 'sse alg',
                            'SSECustomerKey': 'sse key'}
         }})
-    payload = ps3.get_payload(context)
+    payload = ps3.get_payload(context['s3Fetch'])
 
     assert payload
     assert payload == b'bunchofbytes'
@@ -131,7 +131,8 @@ def test_aws_client_pass_substitutions(mock_s3):
                            'SSECustomerAlgorithm': 'sse alg',
                            'SSECustomerKey': 'sse key'}
         }})
-    payload = ps3.get_payload(context)
+
+    payload = ps3.get_payload(ps3.get_fetch_input(context, 'arbcaller'))
 
     assert payload
     assert payload == b'bunchofbytes'

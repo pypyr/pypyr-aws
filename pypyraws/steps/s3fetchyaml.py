@@ -16,7 +16,7 @@ def run_step(context):
             - s3Fetch: dict. mandatory. Must contain:
                 - Bucket: string. s3 bucket name.
                 - Key: string. s3 key name.
-            - outKey. string. If exists, write yaml structure to this
+            - key. string. If exists, write yaml structure to this
                            context key. Else yaml writes to context root.
 
     yaml parsed from the s3 file will be merged into the
@@ -26,18 +26,22 @@ def run_step(context):
     'boiled'.
     """
     logger.debug("started")
-    response = pypyraws.aws.s3.get_payload(context)
+
+    fetch_me = context.get_formatted('s3Fetch')
+
+    response = pypyraws.aws.s3.get_payload(fetch_me)
 
     yaml_loader = yaml.YAML(typ='safe', pure=True)
     payload = yaml_loader.load(response)
     logger.debug("successfully parsed yaml from s3 response bytes")
 
-    destination_key_expression = context['s3Fetch'].get('outKey', None)
+    destination_key = fetch_me.get('key', None)
+    if not destination_key:
+        # backward compatibility
+        destination_key = fetch_me.get('outKey', None)
 
-    if destination_key_expression:
-        destination_key = context.get_formatted_iterable(
-            destination_key_expression)
-        logger.debug(f"Writing yaml to context {destination_key}")
+    if destination_key:
+        logger.debug(f"writing yaml to context {destination_key}")
         context[destination_key] = payload
     else:
         if not isinstance(payload, MutableMapping):
