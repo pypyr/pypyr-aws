@@ -41,20 +41,17 @@ def run_step(context):
                                                   None.
     """
     logger.debug("started")
-    client_in, service_name, method_name = contextargs.get_awsclient_args(
-        context, __name__)
+    context.assert_key_has_value('awsClientIn', __name__)
+    client_in = context.get_formatted('awsClientIn')
 
-    client_args = contextargs.get_formatted_iterable(input_dict=client_in,
-                                                     field_name='clientArgs',
-                                                     context=context)
-
-    method_args = contextargs.get_formatted_iterable(input_dict=client_in,
-                                                     field_name='methodArgs',
-                                                     context=context)
+    (service_name,
+     method_name,
+     client_args,
+     method_args) = contextargs.get_awsclient_args(client_in, __name__)
 
     context['awsClientOut'] = pypyraws.aws.service.operation_exec(
-        service_name=context.get_formatted_string(service_name),
-        method_name=context.get_formatted_string(method_name),
+        service_name=service_name,
+        method_name=method_name,
         client_args=client_args,
         operation_args=method_args)
 
