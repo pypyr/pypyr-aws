@@ -16,8 +16,8 @@ def test_aws_client_missing_awsclientin():
         client_step.run_step(context)
 
     assert str(err_info.value) == (
-        "awsClientIn missing required key for pypyraws.steps.client: "
-        "awsClientIn not found in the pypyr context.")
+        "context['awsClientIn'] doesn't exist. It must exist for "
+        "pypyraws.steps.client.")
 
 
 @patch('pypyraws.aws.service.operation_exec', return_value={'rk1': 'rv1',

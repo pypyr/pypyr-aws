@@ -1,5 +1,6 @@
 """pypyr step that creates a custom waiter for any aws client operation."""
 import logging
+from pypyr.utils.asserts import assert_key_has_value
 from pypyr.utils.poll import wait_until_true
 import pypyraws.aws.service
 import pypyraws.contextargs as contextargs
@@ -61,19 +62,13 @@ def run_step(context):
     context.assert_key_has_value('awsWaitFor', __name__)
     wait_for = context['awsWaitFor']
 
-    client_in, service_name, method_name = contextargs.get_awsclient_args(
-        wait_for, __name__)
+    assert_key_has_value(wait_for, 'awsClientIn', __name__, 'awsWaitFor')
+    aws_client_in = context.get_formatted_value(wait_for['awsClientIn'])
 
-    service_name = context.get_formatted_string(service_name)
-    method_name = context.get_formatted_string(method_name)
-
-    client_args = contextargs.get_formatted_iterable(input_dict=client_in,
-                                                     field_name='clientArgs',
-                                                     context=context)
-
-    method_args = contextargs.get_formatted_iterable(input_dict=client_in,
-                                                     field_name='methodArgs',
-                                                     context=context)
+    (service_name,
+     method_name,
+     client_args,
+     method_args) = contextargs.get_awsclient_args(aws_client_in, __name__)
 
     (wait_for_field,
      to_be,
@@ -169,7 +164,7 @@ def get_poll_args(waitfor_dict, context):
     logger.debug("started")
     wait_for_field = waitfor_dict['waitForField']
 
-    to_be = context.get_formatted_string(str(waitfor_dict['toBe']))
+    to_be = context.get_formatted_value(waitfor_dict['toBe'])
 
     poll_interval = context.get_formatted_as_type(
         waitfor_dict.get('pollInterval', 30),
