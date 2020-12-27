@@ -94,8 +94,8 @@ awsWaitFor:
 Don't Panic! Check the 
 [pypyraws technical docs](https://pypyr.io/docs/plugins/aws/) to begin. 
 For help, community & talk, check 
-[pypyr twitter](https://twitter.com/pypyrpipes/), or join the chat on 
-[pypyr discord](https://discordapp.com/invite/8353JkB)!
+[pypyr twitter](https://twitter.com/pypyrpipes/), or join the chat at the 
+[pypyr community discussion forum](https://github.com/pypyr/pypyr/discussions)!
 
 ## contribute
 ### developers
